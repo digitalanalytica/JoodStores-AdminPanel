@@ -137,6 +137,13 @@
         <a class="nav-link {{ Request::is('coupons*') ? 'active' : '' }}" href="{!! route('coupons.index') !!}">@if($icons)<i class="nav-icon fa fa-ticket"></i>@endif<p>{{trans('lang.coupon_plural')}} <span class="right badge badge-danger">New</span></p></a>
     </li>
 @endcan
+@can('package.index')
+    <li class="nav-item">
+        <a class="nav-link {{ Request::is('package*') ? 'active' : '' }}" href="{!! route('package.index') !!}">
+            @if($icons)<i class="nav-icon fa fa-plus-square"></i>@endif
+            <p>{{trans('lang.package_plural')}}<span class="right badge badge-danger">New</span></p></a>
+    </li>
+@endcan
 
 @can('drivers.index')
     <li class="nav-item">
