@@ -15,14 +15,14 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0 text-dark">{{trans('lang.coupon_plural')}} <small>{{trans('lang.coupon_desc')}}</small></h1>
+        <h1 class="m-0 text-dark">{{trans('lang.package_plural')}} <small>{{trans('lang.package_desc')}}</small></h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="{{url('/dashboard')}}"><i class="fa fa-dashboard"></i> {{trans('lang.dashboard')}}</a></li>
-          <li class="breadcrumb-item"><a href="{!! route('coupons.index') !!}">{{trans('lang.coupon_plural')}}</a>
+          <li class="breadcrumb-item"><a href="{!! route('package.index') !!}">{{trans('lang.package_plural')}}</a>
           </li>
-          <li class="breadcrumb-item active">{{trans('lang.coupon_create')}}</li>
+          <li class="breadcrumb-item active">{{trans('lang.package_create')}}</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -37,20 +37,20 @@
   <div class="card">
     <div class="card-header">
       <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
-        @can('coupons.index')
+        @can('package.index')
         <li class="nav-item">
-          <a class="nav-link" href="{!! route('coupons.index') !!}"><i class="fa fa-list mr-2"></i>{{trans('lang.coupon_table')}}</a>
+          <a class="nav-link" href="{!! route('package.index') !!}"><i class="fa fa-list mr-2"></i>{{trans('lang.package_table')}}</a>
         </li>
         @endcan
         <li class="nav-item">
-          <a class="nav-link active" href="{!! url()->current() !!}"><i class="fa fa-plus mr-2"></i>{{trans('lang.coupon_create')}}</a>
+          <a class="nav-link active" href="{!! url()->current() !!}"><i class="fa fa-plus mr-2"></i>{{trans('lang.package_create')}}</a>
         </li>
       </ul>
     </div>
     <div class="card-body">
-      {!! Form::open(['route' => 'coupons.store']) !!}
+      {!! Form::open(['route' => 'package.store']) !!}
       <div class="row">
-        @include('coupons.fields')
+        @include('packages.fields')
       </div>
       {!! Form::close() !!}
       <div class="clearfix"></div>

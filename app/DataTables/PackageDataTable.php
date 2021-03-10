@@ -31,10 +31,10 @@ class PackageDataTable extends DataTable
             ->editColumn('updated_at', function ($package) {
                 return getDateColumn($package, 'updated_at');
             })
-            ->editColumn('enabled', function ($package) {
-                return getBooleanColumn($package, 'enabled');
+            ->editColumn('status', function ($package) {
+                return getBooleanColumn($package, 'status');
             })
-            ->addColumn('action', 'coupons.datatables_actions')
+            ->addColumn('action', 'packages.datatables_actions')
             ->rawColumns(array_merge($columns, ['action']));
 
         return $dataTable;
@@ -170,6 +170,6 @@ class PackageDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'couponsdatatable_' . time();
+        return 'packagedatatable_' . time();
     }
 }

@@ -91,7 +91,8 @@
 
             @can('productReviews.index')
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('productReviews*') ? 'active' : '' }}" href="{!! route('productReviews.index') !!}">@if($icons)
+                    <a class="nav-link {{ Request::is('productReviews*') ? 'active' : '' }}"
+                       href="{!! route('productReviews.index') !!}">@if($icons)
                             <i class="nav-icon fa fa-comments"></i>@endif<p>{{trans('lang.product_review_plural')}}</p></a>
                 </li>
             @endcan
@@ -142,6 +143,13 @@
         <a class="nav-link {{ Request::is('package*') ? 'active' : '' }}" href="{!! route('package.index') !!}">
             @if($icons)<i class="nav-icon fa fa-plus-square"></i>@endif
             <p>{{trans('lang.package_plural')}}<span class="right badge badge-danger">New</span></p></a>
+    </li>
+@endcan
+@can('country.index')
+    <li class="nav-item">
+        <a class="nav-link {{ Request::is('country*') ? 'active' : '' }}" href="{!! route('country.index') !!}">
+            @if($icons)<i class="nav-icon fa fa-globe"></i>@endif
+            <p>{{trans('lang.country_plural')}}<span class="right badge badge-danger">New</span></p></a>
     </li>
 @endcan
 
@@ -266,7 +274,7 @@
         <a href="#" class="nav-link {{
         (Request::is('settings*') ||
          Request::is('users*')) && !Request::is('settings/mobile*')
-          ? 'active' : '' }}"> @if($icons)<i class="nav-icon fa fa-cogs"></i>@endif
+          ? 'active' : '' }}"> @if($icons)<i class="nav-icon fa fa-cogs fa-spin"></i>@endif
             <p>{{trans('lang.app_setting')}} <i class="right fa fa-angle-left"></i>
             </p>
         </a>

@@ -2,3 +2,5 @@ Side Menu :resources\views\layouts\menu
 ***************
 Settings:C:\xampp\htdocs\eshop\resources\views\layouts\settings\menu
 ***************
+@can('package.create')
+route('package.whatever')
