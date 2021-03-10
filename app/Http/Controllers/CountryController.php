@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Country;
 use App\DataTables\CountryDataTable;
 use Illuminate\Http\Request;
+use Laracasts\Flash\Flash;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 class CountryController extends Controller
 {
@@ -27,17 +29,37 @@ class CountryController extends Controller
     public function create()
     {
         //
+        return view ('countries.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
         //
+        $country_object = new Country();
+        try {
+            $request->validate([
+                'country_name' => 'required|max:30',
+                'country_description' => 'required|max:60',
+                'image' => 'required'
+            ]);
+            $country_object->country_name =$request->country_name;
+            $country_object->country_description =$request->country_description;
+            if(isset($input['image']) && $input['image']){
+                $cacheUpload = $this->uploadRepository->getByUuid($input['image']);
+                $mediaItem = $cacheUpload->getMedia('image')->first();
+                $mediaItem->copy($country_object, 'image');
+            }
+            $country_object->save();
+            return redirect(route('country.index'));
+        }catch (ValidatorException $e ){
+            Flash::error($e->getMessage());
+        }
     }
 
     /**

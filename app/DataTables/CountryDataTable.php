@@ -1,6 +1,6 @@
 <?php
 /**
- * File name: CategoryDataTable.php
+ * File name: CountryDataTable.php
  * Last modified: 2020.04.30 at 08:21:08
  * Author: SmarterVision - https://codecanyon.net/user/smartervision
  * Copyright (c) 2020
@@ -9,7 +9,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Category;
+use App\Country;
 use App\Models\CustomField;
 use Barryvdh\DomPDF\Facade as PDF;
 use Yajra\DataTables\EloquentDataTable;
@@ -21,6 +21,7 @@ class CountryDataTable extends DataTable
      * custom fields columns
      * @var array
      */
+    public static $customFields = [];
 
     /**
      * Build DataTable class.
@@ -33,15 +34,12 @@ class CountryDataTable extends DataTable
         $dataTable = new EloquentDataTable($query);
         $columns = array_column($this->getColumns(), 'data');
         $dataTable = $dataTable
-            ->editColumn('image', function ($country) {
-                return getMediaColumn($country, 'image');
-            })
+
             ->editColumn('updated_at', function ($country) {
                 return getDateColumn($country, 'updated_at');
             })
             ->addColumn('action', 'countries.datatables_actions')
             ->rawColumns(array_merge($columns, ['action']));
-
         return $dataTable;
     }
 
@@ -62,22 +60,33 @@ class CountryDataTable extends DataTable
                 'data' => 'country_description',
                 'title' => trans('lang.country_description'),
 
-            ],
 
+            ],
+            [
+                'data' => 'image',
+                'title' => trans('lang.country_image'),
+                'searchable' => false,
+
+            ],
+            [
+                'data' => 'updated_at',
+                'title' => trans('lang.country_updated_at'),
+                'searchable' => false,
+            ]
         ];
-//
-//        $hasCustomField = in_array(Category::class, setting('custom_field_models', []));
+
+//        $hasCustomField = in_array(country::class, setting('custom_field_models', []));
 //        if ($hasCustomField) {
-//            $customFieldsCollection = CustomField::where('custom_field_model', Category::class)->where('in_table', '=', true)->get();
+//            $customFieldsCollection = CustomField::where('custom_field_model', country::class)->where('in_table', '=', true)->get();
 //            foreach ($customFieldsCollection as $key => $field) {
 //                array_splice($columns, $field->order - 1, 0, [[
 //                    'data' => 'custom_fields.' . $field->name . '.view',
-//                    'title' => trans('lang.category_' . $field->name),
+//                    'title' => trans('lang.country_' . $field->name),
 //                    'orderable' => false,
 //                    'searchable' => false,
 //                ]]);
 //            }
-        //}
+//        }
         return $columns;
     }
 
@@ -87,7 +96,7 @@ class CountryDataTable extends DataTable
      * @param \App\Models\Post $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Category $model)
+    public function query(Country $model)
     {
         return $model->newQuery();
     }
