@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @push('css_lib')
 <!-- iCheck -->
-<link rel="stylesheet" href="{{asset('plugins/iCheck/flat/blue.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
 <!-- select2 -->
 <link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
 <!-- bootstrap wysihtml5 - text editor -->
@@ -15,14 +15,14 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0 text-dark">{{trans('lang.country_plural')}}<small class="ml-3 mr-3">|</small><small>{{trans('lang.country_desc')}}</small></h1>
+        <h1 class="m-0 text-dark">{{trans('lang.delivery_time_slot_plural')}} <small>{{trans('lang.delivery_time_slot_desc')}}</small></h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="{{url('/dashboard')}}"><i class="fa fa-dashboard"></i> {{trans('lang.dashboard')}}</a></li>
-          <li class="breadcrumb-item"><a href="{!! route('country.index') !!}">{{trans('lang.country_plural')}}</a>
+          <li class="breadcrumb-item"><a href="{!! route('deliverytimeslot.index') !!}">{{trans('lang.delivery_time_slot_plural')}}</a>
           </li>
-          <li class="breadcrumb-item active">{{trans('lang.country_edit')}}</li>
+          <li class="breadcrumb-item active">{{trans('lang.delivery_time_slot_create')}}</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -37,25 +37,20 @@
   <div class="card">
     <div class="card-header">
       <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
-        @can('country.index')
+        @can('deliverytimeslot.index')
         <li class="nav-item">
-          <a class="nav-link" href="{!! route('country.index') !!}"><i class="fa fa-list mr-2"></i>{{trans('lang.country_table')}}</a>
-        </li>
-        @endcan
-        @can('country.create')
-        <li class="nav-item">
-          <a class="nav-link" href="{!! route('country.create') !!}"><i class="fa fa-plus mr-2"></i>{{trans('lang.country_create')}}</a>
+          <a class="nav-link" href="{!! route('deliverytimeslot.index') !!}"><i class="fa fa-list mr-2"></i>{{trans('lang.delivery_time_slot_table')}}</a>
         </li>
         @endcan
         <li class="nav-item">
-          <a class="nav-link active" href="{!! url()->current() !!}"><i class="fa fa-pencil mr-2"></i>{{trans('lang.country_edit')}}</a>
+          <a class="nav-link active" href="{!! url()->current() !!}"><i class="fa fa-plus mr-2"></i>{{trans('lang.delivery_time_slot_create')}}</a>
         </li>
       </ul>
     </div>
     <div class="card-body">
-      {!! Form::model($country, ['route' => ['country.update', $country->id], 'method' => 'patch']) !!}
+      {!! Form::open(['route' => 'deliverytimeslot.store']) !!}
       <div class="row">
-        @include('countries.fields')
+        @include('delivery_time_slots.fields')
       </div>
       {!! Form::close() !!}
       <div class="clearfix"></div>
@@ -65,8 +60,6 @@
 @include('layouts.media_modal')
 @endsection
 @push('scripts_lib')
-<!-- iCheck -->
-<script src="{{asset('plugins/iCheck/icheck.min.js')}}"></script>
 <!-- select2 -->
 <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->

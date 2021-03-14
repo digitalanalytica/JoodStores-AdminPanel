@@ -1,21 +1,12 @@
 <?php
-/**
- * File name: CountryDataTable.php
- * Last modified: 2020.04.30 at 08:21:08
- * Author: SmarterVision - https://codecanyon.net/user/smartervision
- * Copyright (c) 2020
- *
- */
 
 namespace App\DataTables;
-
-use App\Country;
-use App\Models\CustomField;
-use Barryvdh\DomPDF\Facade as PDF;
-use Yajra\DataTables\EloquentDataTable;
+use App\DeliveryTimeSlot;
 use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\EloquentDataTable;
+use Barryvdh\DomPDF\Facade as PDF;
 
-class CountryDataTable extends DataTable
+class DeliveryTimeSlotDataTable extends DataTable
 {
     /**
      * custom fields columns
@@ -34,14 +25,15 @@ class CountryDataTable extends DataTable
         $dataTable = new EloquentDataTable($query);
         $columns = array_column($this->getColumns(), 'data');
         $dataTable = $dataTable
-//            ->editColumn('image', function ($country) {
-//                return getMediaColumn($country, 'image');
-//            })
-            ->editColumn('updated_at', function ($country) {
-                return getDateColumn($country, 'updated_at');
+            ->editColumn('updated_at', function ($deliverytimeslot) {
+                return getDateColumn($deliverytimeslot, 'updated_at');
             })
-            ->addColumn('action', 'countries.datatables_actions')
+            ->editColumn('status', function ($deliverytimeslot) {
+                return getBooleanColumn($deliverytimeslot, 'status');
+            })
+            ->addColumn('action', 'delivery_time_slots.datatables_actions')
             ->rawColumns(array_merge($columns, ['action']));
+
         return $dataTable;
     }
 
@@ -53,42 +45,25 @@ class CountryDataTable extends DataTable
     protected function getColumns()
     {
         $columns = [
+
             [
-                'data' => 'country_name',
-                'title' => trans('lang.country_name'),
+                'data' => 'timeslot',
+                'title' => trans('lang.delivery_time_slot_name'),
 
             ],
-            [
-                'data' => 'country_description',
-                'title' => trans('lang.country_description'),
 
+            [
+                'data' => 'status',
+                'title' => trans('lang.delivery_time_slot_status'),
 
             ],
-//            [
-//                'data' => 'image',
-//                'title' => trans('lang.country_image'),
-//                'searchable' => false, 'orderable' => false, 'exportable' => false, 'printable' => false,
-//
-//            ],
+
             [
                 'data' => 'updated_at',
-                'title' => trans('lang.country_updated_at'),
+                'title' => trans('lang.delivery_time_slot_updated_at'),
                 'searchable' => false,
             ]
         ];
-
-//        $hasCustomField = in_array(country::class, setting('custom_field_models', []));
-//        if ($hasCustomField) {
-//            $customFieldsCollection = CustomField::where('custom_field_model', country::class)->where('in_table', '=', true)->get();
-//            foreach ($customFieldsCollection as $key => $field) {
-//                array_splice($columns, $field->order - 1, 0, [[
-//                    'data' => 'custom_fields.' . $field->name . '.view',
-//                    'title' => trans('lang.country_' . $field->name),
-//                    'orderable' => false,
-//                    'searchable' => false,
-//                ]]);
-//            }
-//        }
         return $columns;
     }
 
@@ -98,9 +73,28 @@ class CountryDataTable extends DataTable
      * @param \App\Models\Post $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Country $model)
+    public function query(DeliveryTimeSlot $model)
     {
-        return $model->newQuery();
+        if (auth()->user()->hasRole('admin')) {
+            return $model->newQuery();
+        }elseif (auth()->user()->hasRole('manager')){
+            $markets = $model->join("discountables", "discountables.coupon_id", "=", "coupons.id")
+                ->join("user_markets", "user_markets.market_id", "=", "discountables.discountable_id")
+                ->where('discountable_type','App\\Models\\Market')
+                ->where("user_markets.user_id",auth()->id())->select("coupons.*");
+
+            $products = $model->join("discountables", "discountables.coupon_id", "=", "coupons.id")
+                ->join("products", "products.id", "=", "discountables.discountable_id")
+                ->where('discountable_type','App\\Models\\Product')
+                ->join("user_markets", "user_markets.market_id", "=", "products.market_id")
+                ->where("user_markets.user_id",auth()->id())
+                ->select("coupons.*")
+                ->union($markets);
+            return $products;
+        }else{
+            $model->newQuery();
+        }
+
     }
 
     /**
@@ -118,7 +112,8 @@ class CountryDataTable extends DataTable
                 config('datatables-buttons.parameters'), [
                     'language' => json_decode(
                         file_get_contents(base_path('resources/lang/' . app()->getLocale() . '/datatable.json')
-                        ), true)
+                        ), true),
+                    'order' => [ [5, 'desc'] ],
                 ]
             ));
     }
@@ -141,6 +136,6 @@ class CountryDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'categoriesdatatable_' . time();
+        return 'delivery_time_slot_datatable_' . time();
     }
 }

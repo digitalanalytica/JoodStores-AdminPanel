@@ -34,7 +34,7 @@ class PackageDataTable extends DataTable
             ->editColumn('status', function ($package) {
                 return getBooleanColumn($package, 'status');
             })
-            ->addColumn('action', 'packages.datatables_actions')
+            ->addColumn('action', 'delivery_time_slots.datatables_actions')
             ->rawColumns(array_merge($columns, ['action']));
 
         return $dataTable;

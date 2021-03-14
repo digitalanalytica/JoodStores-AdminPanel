@@ -187,6 +187,7 @@ Route::middleware('auth')->group(function () {
     ]);
     Route::resource('package','\App\Http\Controllers\PackageController')->except(['show']);
     Route::resource('country','\App\Http\Controllers\CountryController')->except(['show']);
+    Route::resource('deliverytimeslot','\App\Http\Controllers\DeliveryTimeSlotController')->except(['show']);
 
 });
 

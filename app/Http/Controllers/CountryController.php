@@ -4,12 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Country;
 use App\DataTables\CountryDataTable;
+use App\Repositories\UploadRepository;
 use Illuminate\Http\Request;
 use Laracasts\Flash\Flash;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class CountryController extends Controller
 {
+    /**
+     * @var UploadRepository
+     */
+    private $uploadRepository;
+
+    public function __construct(UploadRepository $uploadRepo)
+    {
+        parent::__construct();
+        $this->uploadRepository = $uploadRepo;
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,6 +55,7 @@ class CountryController extends Controller
     {
         //
         $country_object = new Country();
+        $input = $request->all();
         try {
             $request->validate([
                 'country_name' => 'required|max:30',
@@ -50,10 +64,10 @@ class CountryController extends Controller
             ]);
             $country_object->country_name =$request->country_name;
             $country_object->country_description =$request->country_description;
-            if(isset($input['image']) && $input['image']){
+            if (isset($input['image']) && $input['image']) {
                 $cacheUpload = $this->uploadRepository->getByUuid($input['image']);
                 $mediaItem = $cacheUpload->getMedia('image')->first();
-                $mediaItem->copy($country_object, 'image');
+//                $mediaItem->copy($request,'image');
             }
             $country_object->save();
             return redirect(route('country.index'));
@@ -79,9 +93,18 @@ class CountryController extends Controller
      * @param  \App\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function edit(Country $country)
+    public function edit($id)
     {
         //
+        $country = Country::findOrFail($id);
+
+        if (empty($country)) {
+            Flash::error('Country not found');
+
+            return redirect(route('country.index'));
+        }
+
+        return view('countries.edit')->with('country', $country);
     }
 
     /**
@@ -91,9 +114,27 @@ class CountryController extends Controller
      * @param  \App\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Country $country)
+    public function update(Request $request, $id)
     {
         //
+        $country_object = Country::findOrFail($id);
+        try {
+            $request->validate([
+                'country_name' => 'required|max:30',
+                'country_description' => 'required|max:60',
+            ]);
+            $country_object->country_name =$request->country_name;
+            $country_object->country_description =$request->country_description;
+            if (isset($input['image']) && $input['image']) {
+                $cacheUpload = $this->uploadRepository->getByUuid($input['image']);
+                $mediaItem = $cacheUpload->getMedia('image')->first();
+//                $mediaItem->copy($request,'image');
+            }
+            $country_object->save();
+            return redirect(route('country.index'));
+        }catch (ValidatorException $e ){
+            Flash::error($e->getMessage());
+        }
     }
 
     /**
@@ -102,8 +143,19 @@ class CountryController extends Controller
      * @param  \App\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Country $country)
+    public function destroy($id)
     {
-        //
+        $country = Country::findOrFail($id);
+        if (empty($country)) {
+            Flash::error('country not found');
+
+            return redirect(route('country.index'));
+        }
+        $country = country::findOrFail($id)->delete();
+
+
+        Flash::success(__('lang.deleted_successfully', ['operator' => __('lang.country')]));
+
+        return redirect(route('country.index'));
     }
 }
