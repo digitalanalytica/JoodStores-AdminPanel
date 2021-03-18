@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Country;
 use App\DataTables\CountryDataTable;
+use App\Repositories\CountryRepository;
+use App\Repositories\CustomFieldRepository;
 use App\Repositories\UploadRepository;
 use Illuminate\Http\Request;
 use Laracasts\Flash\Flash;
@@ -12,14 +14,25 @@ use Prettus\Validator\Exceptions\ValidatorException;
 class CountryController extends Controller
 {
     /**
+     * @var CustomFieldRepository
+     */
+    private $customFieldRepository;
+    /**
      * @var UploadRepository
      */
     private $uploadRepository;
 
-    public function __construct(UploadRepository $uploadRepo)
+    /**
+     * @var CountryRepository
+     */
+    private $countryRepository;
+
+    public function __construct(UploadRepository $uploadRepo, CountryRepository $countryRepo, CustomFieldRepository $customFieldRepo)
     {
         parent::__construct();
         $this->uploadRepository = $uploadRepo;
+        $this->countryRepository = $countryRepo;
+        $this->customFieldRepository = $customFieldRepo;
 
     }
 
@@ -54,22 +67,25 @@ class CountryController extends Controller
     public function store(Request $request)
     {
         //
-        $country_object = new Country();
+       // $country_object = new Country();
         $input = $request->all();
+        $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->countryRepository->model());
         try {
             $request->validate([
                 'country_name' => 'required|max:30',
                 'country_description' => 'required|max:60',
                 'image' => 'required'
             ]);
-            $country_object->country_name =$request->country_name;
-            $country_object->country_description =$request->country_description;
+            $country = $this->countryRepository->create($input);
+            $country->customFieldsValues()->createMany(getCustomFieldsValues($customFields, $request));
+//            $country_object->country_name =$request->country_name;
+//            $country_object->country_description =$request->country_description;
             if (isset($input['image']) && $input['image']) {
                 $cacheUpload = $this->uploadRepository->getByUuid($input['image']);
                 $mediaItem = $cacheUpload->getMedia('image')->first();
-//                $mediaItem->copy($request,'image');
+                $mediaItem->copy($country, 'image');
             }
-            $country_object->save();
+          //  $country_object->save();
             return redirect(route('country.index'));
         }catch (ValidatorException $e ){
             Flash::error($e->getMessage());

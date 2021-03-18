@@ -30,13 +30,12 @@ class CountryDataTable extends DataTable
      * @return \Yajra\DataTables\DataTableAbstract
      */
     public function dataTable($query)
-    {
-        $dataTable = new EloquentDataTable($query);
+    {$dataTable = new EloquentDataTable($query);
         $columns = array_column($this->getColumns(), 'data');
         $dataTable = $dataTable
-//            ->editColumn('image', function ($country) {
-//                return getMediaColumn($country, 'image');
-//            })
+            ->editColumn('image', function ($country) {
+                return getMediaColumn($country, 'image');
+            })
             ->editColumn('updated_at', function ($country) {
                 return getDateColumn($country, 'updated_at');
             })
@@ -64,12 +63,11 @@ class CountryDataTable extends DataTable
 
 
             ],
-//            [
-//                'data' => 'image',
-//                'title' => trans('lang.country_image'),
-//                'searchable' => false, 'orderable' => false, 'exportable' => false, 'printable' => false,
-//
-//            ],
+            [
+                'data' => 'image',
+                'title' => trans('lang.field_image'),
+                'searchable' => false, 'orderable' => false, 'exportable' => false, 'printable' => false,
+            ],
             [
                 'data' => 'updated_at',
                 'title' => trans('lang.country_updated_at'),
@@ -77,18 +75,18 @@ class CountryDataTable extends DataTable
             ]
         ];
 
-//        $hasCustomField = in_array(country::class, setting('custom_field_models', []));
-//        if ($hasCustomField) {
-//            $customFieldsCollection = CustomField::where('custom_field_model', country::class)->where('in_table', '=', true)->get();
-//            foreach ($customFieldsCollection as $key => $field) {
-//                array_splice($columns, $field->order - 1, 0, [[
-//                    'data' => 'custom_fields.' . $field->name . '.view',
-//                    'title' => trans('lang.country_' . $field->name),
-//                    'orderable' => false,
-//                    'searchable' => false,
-//                ]]);
-//            }
-//        }
+        $hasCustomField = in_array(Country::class, setting('custom_field_models', []));
+        if ($hasCustomField) {
+            $customFieldsCollection = CustomField::where('custom_field_model', Country::class)->where('in_table', '=', true)->get();
+            foreach ($customFieldsCollection as $key => $field) {
+                array_splice($columns, $field->order - 1, 0, [[
+                    'data' => 'custom_fields.' . $field->name . '.view',
+                    'title' => trans('lang.field_' . $field->name),
+                    'orderable' => false,
+                    'searchable' => false,
+                ]]);
+            }
+        }
         return $columns;
     }
 
