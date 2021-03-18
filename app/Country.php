@@ -15,13 +15,13 @@ class Country extends Model implements HasMedia
         getFirstMediaUrl as protected getFirstMediaUrlTrait;
     }
 
-    public $table = 'fields';
+    public $table = 'countries';
 
 
 
     public $fillable = [
-        'name',
-        'description'
+        'country_name',
+        'country_description'
     ];
 
     /**
@@ -30,9 +30,9 @@ class Country extends Model implements HasMedia
      * @var array
      */
     protected $casts = [
-        'name' => 'string',
-        'description' => 'string',
-        'image' => 'string'
+        'country_name' => 'string',
+        'country_description' => 'string',
+        'country_image' => 'string'
     ];
 
     /**
@@ -41,7 +41,7 @@ class Country extends Model implements HasMedia
      * @var array
      */
     public static $rules = [
-        'name' => 'required',
+        'country_name' => 'required',
     ];
 
     /**
@@ -51,7 +51,6 @@ class Country extends Model implements HasMedia
      */
     protected $appends = [
         'custom_fields',
-        'markets'
     ];
 
     /**

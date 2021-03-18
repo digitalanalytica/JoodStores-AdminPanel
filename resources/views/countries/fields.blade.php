@@ -38,20 +38,20 @@
   @prepend('scripts')
     <script type="text/javascript">
       var var15866134631720934041ble = '';
-      @if(isset($field) && $field->hasMedia('image'))
+      @if(isset($country) && $country->hasMedia('image'))
               var15866134631720934041ble = {
-        name: "{!! $field->getFirstMedia('image')->name !!}",
-        size: "{!! $field->getFirstMedia('image')->size !!}",
-        type: "{!! $field->getFirstMedia('image')->mime_type !!}",
-        collection_name: "{!! $field->getFirstMedia('image')->collection_name !!}"};
+        name: "{!! $country->getFirstMedia('image')->name !!}",
+        size: "{!! $country->getFirstMedia('image')->size !!}",
+        type: "{!! $country->getFirstMedia('image')->mime_type !!}",
+        collection_name: "{!! $country->getFirstMedia('image')->collection_name !!}"};
       @endif
       var dz_var15866134631720934041ble = $(".dropzone.image").dropzone({
         url: "{!!url('uploads/store')!!}",
         addRemoveLinks: true,
         maxFiles: 1,
         init: function () {
-          @if(isset($field) && $field->hasMedia('image'))
-          dzInit(this,var15866134631720934041ble,'{!! url($field->getFirstMediaUrl('image','thumb')) !!}')
+          @if(isset($country) && $country->hasMedia('image'))
+          dzInit(this,var15866134631720934041ble,'{!! url($country->getFirstMediaUrl('image','thumb')) !!}')
           @endif
         },
         accept: function(file, done) {
@@ -70,8 +70,8 @@
         },
         removedfile: function (file) {
           dzRemoveFile(
-                  file, var15866134631720934041ble, '{!! url("fields/remove-media") !!}',
-                  'image', '{!! isset($field) ? $field->id : 0 !!}', '{!! url("uplaods/clear") !!}', '{!! csrf_token() !!}'
+                  file, var15866134631720934041ble, '{!! url("countries/remove-media") !!}',
+                  'image', '{!! isset($country) ? $country->id : 0 !!}', '{!! url("uplaods/clear") !!}', '{!! csrf_token() !!}'
           );
         }
       });
