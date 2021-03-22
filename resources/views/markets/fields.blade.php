@@ -21,6 +21,14 @@
             <div class="form-text text-muted">{{ trans("lang.market_fields_help") }}</div>
         </div>
     </div>
+    <!-- Country Field -->
+    <div class="form-group row ">
+        {!! Form::label('country_id','Country',['class' => 'col-3 control-label text-right']) !!}
+        <div class="col-9">
+            {!! Form::select('country_id', $country, null, ['class' => 'select2 form-control' , 'multiple'=>'multiple']) !!}
+            <div class="form-text text-muted">{{ trans("lang.market_fields_help") }}</div>
+        </div>
+    </div>
 
     @hasanyrole('admin|manager')
     <!-- Users Field -->

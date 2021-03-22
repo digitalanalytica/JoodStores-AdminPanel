@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Market;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -103,6 +104,10 @@ class Country extends Model implements HasMedia
             ->get()->toArray();
 
         return convertToAssoc($array,'name');
+    }
+    public function marktes(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Market::class,'market_id');
     }
 
 }

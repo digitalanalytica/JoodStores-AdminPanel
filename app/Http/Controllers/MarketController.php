@@ -9,6 +9,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Country;
 use App\Criteria\Markets\MarketsOfUserCriteria;
 use App\Criteria\Users\AdminsCriteria;
 use App\Criteria\Users\ClientsCriteria;
@@ -20,6 +21,7 @@ use App\DataTables\RequestedMarketDataTable;
 use App\Events\MarketChangedEvent;
 use App\Http\Requests\CreateMarketRequest;
 use App\Http\Requests\UpdateMarketRequest;
+use App\Repositories\CountryRepository;
 use App\Repositories\CustomFieldRepository;
 use App\Repositories\FieldRepository;
 use App\Repositories\MarketRepository;
@@ -53,8 +55,16 @@ class MarketController extends Controller
      * @var FieldRepository
      */
     private $fieldRepository;
+    /**
+     * @var CountryRepository
+     */
+    private $countryRepository;
 
-    public function __construct(MarketRepository $marketRepo, CustomFieldRepository $customFieldRepo, UploadRepository $uploadRepo, UserRepository $userRepo, FieldRepository $fieldRepository)
+    public function __construct(MarketRepository $marketRepo,
+                                CustomFieldRepository $customFieldRepo,
+                                UploadRepository $uploadRepo, UserRepository $userRepo,
+                                FieldRepository $fieldRepository,
+                                CountryRepository $countryRepository)
     {
         parent::__construct();
         $this->marketRepository = $marketRepo;
@@ -62,6 +72,7 @@ class MarketController extends Controller
         $this->uploadRepository = $uploadRepo;
         $this->userRepository = $userRepo;
         $this->fieldRepository = $fieldRepository;
+        $this->countryRepository = $countryRepository;
     }
 
     /**
@@ -89,7 +100,7 @@ class MarketController extends Controller
     /**
      * Show the form for creating a new Market.
      *
-     * @return Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|Response|\Illuminate\View\View
      */
     public function create()
     {
@@ -97,15 +108,25 @@ class MarketController extends Controller
         $user = $this->userRepository->getByCriteria(new ManagersCriteria())->pluck('name', 'id');
         $drivers = $this->userRepository->getByCriteria(new DriversCriteria())->pluck('name', 'id');
         $field = $this->fieldRepository->pluck('name', 'id');
+        $country = $this->countryRepository->pluck('country_name', 'id');
         $usersSelected = [];
         $driversSelected = [];
         $fieldsSelected = [];
+        $countrySelected = [];
         $hasCustomField = in_array($this->marketRepository->model(), setting('custom_field_models', []));
         if ($hasCustomField) {
             $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->marketRepository->model());
             $html = generateCustomField($customFields);
         }
-        return view('markets.create')->with("customFields", isset($html) ? $html : false)->with("user", $user)->with("drivers", $drivers)->with("usersSelected", $usersSelected)->with("driversSelected", $driversSelected)->with('field', $field)->with('fieldsSelected', $fieldsSelected);
+        return view('markets.create')->with("customFields", isset($html) ? $html : false)
+            ->with("user", $user)
+            ->with("drivers", $drivers)
+            ->with("usersSelected", $usersSelected)
+            ->with("driversSelected", $driversSelected)
+            ->with('field', $field)
+            ->with('fieldsSelected', $fieldsSelected)
+            ->with('country', $country)
+            ->with('countrySelected', $countrySelected);;
     }
 
     /**
@@ -167,13 +188,14 @@ class MarketController extends Controller
      *
      * @param int $id
      *
-     * @return Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|Response|\Illuminate\View\View
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      */
     public function edit($id)
     {
         $this->marketRepository->pushCriteria(new MarketsOfUserCriteria(auth()->id()));
         $market = $this->marketRepository->findWithoutFail($id);
+        $country = $this->countryRepository->pluck('country_name', 'id');
 
         if (empty($market)) {
             Flash::error(__('lang.not_found', ['operator' => __('lang.market')]));
@@ -200,7 +222,16 @@ class MarketController extends Controller
             $html = generateCustomField($customFields, $customFieldsValues);
         }
 
-        return view('markets.edit')->with('market', $market)->with("customFields", isset($html) ? $html : false)->with("user", $user)->with("drivers", $drivers)->with("usersSelected", $usersSelected)->with("driversSelected", $driversSelected)->with('field', $field)->with('fieldsSelected', $fieldsSelected);
+        return view('markets.edit')
+            ->with('market', $market)
+            ->with("customFields", isset($html) ? $html : false)
+            ->with("user", $user)
+            ->with("drivers", $drivers)
+            ->with("usersSelected", $usersSelected)
+            ->with("driversSelected", $driversSelected)
+            ->with('field', $field)
+            ->with('fieldsSelected', $fieldsSelected)
+            ->with('country', $country);
     }
 
     /**

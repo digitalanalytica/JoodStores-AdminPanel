@@ -9,6 +9,7 @@
 
 namespace App\Models;
 
+use App\Country;
 use Eloquent as Model;
 use Illuminate\Support\Facades\DB;
 use Spatie\Image\Manipulations;
@@ -64,6 +65,7 @@ class Market extends Model implements HasMedia
         'description',
         'address',
         'latitude',
+        'country',
         'longitude',
         'phone',
         'mobile',
@@ -75,6 +77,7 @@ class Market extends Model implements HasMedia
         'closed',
         'information',
         'active',
+        'country_id',
     ];
 
     /**
@@ -98,7 +101,8 @@ class Market extends Model implements HasMedia
         'available_for_delivery'=>'boolean',
         'closed'=>'boolean',
         'information' => 'string',
-        'active' =>'boolean'
+        'active' =>'boolean',
+        'country_id'=>'integer',
     ];
 
     /**
@@ -114,6 +118,7 @@ class Market extends Model implements HasMedia
         'longitude' => 'required|numeric',
         'latitude' => 'required|numeric',
         'admin_commission' => 'required|numeric|min:0',
+        'country_id' => 'required|numeric',
     ];
 
     /**
@@ -258,6 +263,9 @@ class Market extends Model implements HasMedia
     public function fields()
     {
         return $this->belongsToMany(\App\Models\Field::class, 'market_fields');
+    }
+    public function country(){
+        return $this->belongsTo(Country::class,'country_id');
     }
 
     

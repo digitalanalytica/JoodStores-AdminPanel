@@ -73,7 +73,7 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new Product.
      *
-     * @return Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|Response|\Illuminate\View\View
      */
     public function create()
     {
@@ -89,7 +89,10 @@ class ProductController extends Controller
             $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->productRepository->model());
             $html = generateCustomField($customFields);
         }
-        return view('products.create')->with("customFields", isset($html) ? $html : false)->with("market", $market)->with("category", $category);
+        return view('products.create')
+            ->with("customFields", isset($html) ? $html : false)
+            ->with("market", $market)
+            ->with("category", $category);
     }
 
     /**
@@ -147,7 +150,7 @@ class ProductController extends Controller
      *
      * @param int $id
      *
-     * @return Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|Response|\Illuminate\View\View
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      */
     public function edit($id)
@@ -171,7 +174,11 @@ class ProductController extends Controller
             $html = generateCustomField($customFields, $customFieldsValues);
         }
 
-        return view('products.edit')->with('product', $product)->with("customFields", isset($html) ? $html : false)->with("market", $market)->with("category", $category);
+        return view('products.edit')
+            ->with('product', $product)
+            ->with("customFields", isset($html) ? $html : false)
+            ->with("market", $market)
+            ->with("category", $category);
     }
 
     /**
