@@ -126,7 +126,7 @@ class MarketController extends Controller
             ->with('field', $field)
             ->with('fieldsSelected', $fieldsSelected)
             ->with('country', $country)
-            ->with('countrySelected', $countrySelected);;
+            ->with('countrySelected', $countrySelected);
     }
 
     /**
@@ -281,7 +281,7 @@ class MarketController extends Controller
      *
      * @param int $id
      *
-     * @return Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|Response
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      */
     public function destroy($id)

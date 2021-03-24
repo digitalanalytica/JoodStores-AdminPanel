@@ -50,7 +50,7 @@ class CountryController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function create()
     {
@@ -78,8 +78,6 @@ class CountryController extends Controller
             ]);
             $country = $this->countryRepository->create($input);
             $country->customFieldsValues()->createMany(getCustomFieldsValues($customFields, $request));
-//            $country_object->country_name =$request->country_name;
-//            $country_object->country_description =$request->country_description;
             if (isset($input['image']) && $input['image']) {
                 $cacheUpload = $this->uploadRepository->getByUuid($input['image']);
                 $mediaItem = $cacheUpload->getMedia('image')->first();
@@ -98,9 +96,18 @@ class CountryController extends Controller
      * @param  \App\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function show(Country $country)
+    public function show($id)
     {
         //
+        $country = Country::findOrFail($id);
+
+        if (empty($country)) {
+            Flash::error('Country not found');
+
+            return redirect(route('country.index'));
+        }
+
+        return view('countries.show')->with('country', $country);
     }
 
     /**

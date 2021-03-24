@@ -100,7 +100,6 @@ class CountryDataTable extends DataTable
     {
         return $model->newQuery();
     }
-
     /**
      * Optional method if you want to use html builder.
      *

@@ -45,7 +45,6 @@ class DeliveryTimeSlotDataTable extends DataTable
     protected function getColumns()
     {
         $columns = [
-
             [
                 'data' => 'timeslot',
                 'title' => trans('lang.delivery_time_slot_name'),
@@ -57,7 +56,6 @@ class DeliveryTimeSlotDataTable extends DataTable
                 'title' => trans('lang.delivery_time_slot_status'),
 
             ],
-
             [
                 'data' => 'updated_at',
                 'title' => trans('lang.delivery_time_slot_updated_at'),

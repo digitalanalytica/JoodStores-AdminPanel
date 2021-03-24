@@ -1112,6 +1112,35 @@ return [
     'country_image_placeholder' => 'Insert image in SVG format',
     'country_updated_at' => 'Updated At',
     /*           End                */
+    /** Add the country translation */
+    'merchant' => 'Merchant',
+    'merchant_plural' => 'Merchant Requests',
+    'merchant_desc' => 'Merchants Management',
+    'merchant_edit' => 'Edit Merchant',
+    'merchant_table' => 'Merchant List',
+    'merchant_create' => 'Create merchant',
+
+    'merchant_name' => 'Full Name',
+    'merchant_name_help' => 'Insert Full Name',
+    'merchant_name_placeholder' => 'Insert Full Name',
+
+
+    'merchant_shop_name' => 'Shop Name',
+    'merchant_shop_name_help' => 'Insert Shop Name',
+    'merchant_shop_name_placeholder' => 'Insert Shop Name',
+    'merchant_email' => 'Email',
+    'merchant_email_help' => 'Insert Your Email',
+    'merchant_email_placeholder' => 'Insert Your Email',
+    'merchant_phone' => 'Phone Number',
+    'merchant_phone_help' => 'Insert Your Phone Number',
+    'merchant_phone_placeholder' => 'Insert Phone Number',
+
+    'merchant_image_id' => 'Upload your ID Image',
+    'merchant_image_cr' => 'Upload your commercial registration Image',
+    'merchant_image_help' => 'Insert image in SVG format',
+    'merchant_image_placeholder' => 'Insert image in SVG format',
+    'merchant_updated_at' => 'Updated At',
+    /*           End                */
     /** Add the delivery time slot translation */
     'delivery_time_slot' => 'Delivery Time Slot',
     'delivery_time_slot_plural' => 'Delivery Time Slots',

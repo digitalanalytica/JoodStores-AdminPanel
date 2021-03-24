@@ -152,6 +152,13 @@
             <p>{{trans('lang.country_plural')}}<span class="right badge badge-danger">New</span></p></a>
     </li>
 @endcan
+@can('merchants.index')
+    <li class="nav-item">
+        <a class="nav-link {{ Request::is('merchant*') ? 'active' : '' }}" href="{!! route('merchants.index') !!}">
+            @if($icons)<i class="nav-icon fa fa-exclamation-circle"></i>@endif
+            <p>{{trans('lang.merchant_plural')}}<span class="right badge badge-danger">New</span></p></a>
+    </li>
+@endcan
 @can('deliverytimeslot.index')
     <li class="nav-item">
         <a class="nav-link {{ Request::is('deliverytimeslot*') ? 'active' : '' }}" href="{!! route('deliverytimeslot.index') !!}">
