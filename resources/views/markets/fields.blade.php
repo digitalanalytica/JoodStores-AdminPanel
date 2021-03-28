@@ -23,13 +23,12 @@
     </div>
     <!-- Country Field -->
     <div class="form-group row ">
-        {!! Form::label('country_id','Country',['class' => 'col-3 control-label text-right']) !!}
+        {!! Form::label('package_id','Package:',['class' => 'col-3 control-label text-right']) !!}
         <div class="col-9">
-            {!! Form::select('country_id', $country, null, ['class' => 'select2 form-control' , 'multiple'=>'multiple']) !!}
+            {!! Form::select('package_id', $package, null, ['class' => 'select2 form-control']) !!}
             <div class="form-text text-muted">{{ trans("lang.market_fields_help") }}</div>
         </div>
     </div>
-
     @hasanyrole('admin|manager')
     <!-- Users Field -->
     <div class="form-group row ">
@@ -95,7 +94,14 @@
             </div>
         </div>
     </div>
-
+    <!-- Country Field -->
+    <div class="form-group row ">
+        {!! Form::label('country_id','Country',['class' => 'col-3 control-label text-right']) !!}
+        <div class="col-9">
+            {!! Form::select('country_id', $country, null, ['class' => 'select2 form-control' , 'multiple'=>'multiple']) !!}
+            <div class="form-text text-muted">{{ trans("lang.market_fields_help") }}</div>
+        </div>
+    </div>
     <!-- Address Field -->
     <div class="form-group row ">
         {!! Form::label('address', trans("lang.market_address"), ['class' => 'col-3 control-label text-right']) !!}

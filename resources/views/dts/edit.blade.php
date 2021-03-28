@@ -15,14 +15,14 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">{{trans('lang.package_plural')}} <small>{{trans('lang.package_desc')}}</small></h1>
+                    <h1 class="m-0 text-dark">{{trans('lang.delivery_time_slot_plural')}} <small>{{trans('lang.delivery_time_slot_desc')}}</small></h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{url('/dashboard')}}"><i class="fa fa-dashboard"></i> {{trans('lang.dashboard')}}</a></li>
-                        <li class="breadcrumb-item"><a href="{!! route('package.index') !!}">{{trans('lang.package_plural')}}</a>
+                        <li class="breadcrumb-item"><a href="{!! route('deliverytimeslot.index') !!}">{{trans('lang.delivery_time_slot_plural')}}</a>
                         </li>
-                        <li class="breadcrumb-item active">{{trans('lang.package_edit')}}</li>
+                        <li class="breadcrumb-item active">{{trans('lang.delivery_time_slot_edit')}}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -37,25 +37,25 @@
         <div class="card">
             <div class="card-header">
                 <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
-                    @can('package.index')
+                    @can('deliverytimeslot.index')
                         <li class="nav-item">
-                            <a class="nav-link" href="{!! route('package.index') !!}"><i class="fa fa-list mr-2"></i>{{trans('lang.package_table')}}</a>
+                            <a class="nav-link" href="{!! route('deliverytimeslot.index') !!}"><i class="fa fa-list mr-2"></i>{{trans('lang.delivery_time_slot_table')}}</a>
                         </li>
                     @endcan
-                    @can('package.create')
+                    @can('deliverytimeslot.create')
                         <li class="nav-item">
-                            <a class="nav-link" href="{!! route('package.create') !!}"><i class="fa fa-plus mr-2"></i>{{trans('lang.package_create')}}</a>
+                            <a class="nav-link" href="{!! route('deliverytimeslot.create') !!}"><i class="fa fa-plus mr-2"></i>{{trans('lang.delivery_time_slot_create')}}</a>
                         </li>
                     @endcan
                     <li class="nav-item">
-                        <a class="nav-link active" href="{!! url()->current() !!}"><i class="fa fa-pencil mr-2"></i>{{trans('lang.package_edit')}}</a>
+                        <a class="nav-link active" href="{!! url()->current() !!}"><i class="fa fa-pencil mr-2"></i>{{trans('lang.delivery_time_slot_edit')}}</a>
                     </li>
                 </ul>
             </div>
             <div class="card-body">
-                {!! Form::model($package, ['route' => ['package.update', $package->id], 'method' => 'patch']) !!}
+                {!! Form::model($dts, ['route' => ['deliverytimeslot.update', $dts->id], 'method' => 'patch']) !!}
                 <div class="row">
-                    @include('packages.fields')
+                    @include('dts.fields')
                 </div>
                 {!! Form::close() !!}
                 <div class="clearfix"></div>

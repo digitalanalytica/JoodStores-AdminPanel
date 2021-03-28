@@ -10,6 +10,7 @@
 namespace App\Models;
 
 use App\Country;
+use App\Package;
 use Eloquent as Model;
 use Illuminate\Support\Facades\DB;
 use Spatie\Image\Manipulations;
@@ -78,6 +79,7 @@ class Market extends Model implements HasMedia
         'information',
         'active',
         'country_id',
+        'package_id',
     ];
 
     /**
@@ -103,6 +105,7 @@ class Market extends Model implements HasMedia
         'information' => 'string',
         'active' =>'boolean',
         'country_id'=>'integer',
+        'package_id'=>'integer',
     ];
 
     /**
@@ -119,6 +122,7 @@ class Market extends Model implements HasMedia
         'latitude' => 'required|numeric',
         'admin_commission' => 'required|numeric|min:0',
         'country_id' => 'required|numeric',
+        'package_id' => 'required|numeric',
     ];
 
     /**
@@ -266,6 +270,9 @@ class Market extends Model implements HasMedia
     }
     public function country(){
         return $this->belongsTo(Country::class,'country_id');
+    }
+    public function package(){
+        return $this->belongsTo(Package::class,'package_id');
     }
 
     

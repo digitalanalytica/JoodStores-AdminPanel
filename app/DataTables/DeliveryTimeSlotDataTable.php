@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 use App\DeliveryTimeSlot;
+use App\Models\CustomField;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -25,44 +26,16 @@ class DeliveryTimeSlotDataTable extends DataTable
         $dataTable = new EloquentDataTable($query);
         $columns = array_column($this->getColumns(), 'data');
         $dataTable = $dataTable
-            ->editColumn('updated_at', function ($deliverytimeslot) {
-                return getDateColumn($deliverytimeslot, 'updated_at');
+            ->editColumn('updated_at', function ($dts) {
+                return getDateColumn($dts, 'updated_at');
             })
-            ->editColumn('status', function ($deliverytimeslot) {
-                return getBooleanColumn($deliverytimeslot, 'status');
+            ->editColumn('status', function ($dts) {
+                return getBooleanColumn($dts, 'enabled');
             })
-            ->addColumn('action', 'delivery_time_slots.datatables_actions')
+            ->addColumn('action', 'dts.datatables_actions')
             ->rawColumns(array_merge($columns, ['action']));
 
         return $dataTable;
-    }
-
-    /**
-     * Get columns.
-     *
-     * @return array
-     */
-    protected function getColumns()
-    {
-        $columns = [
-            [
-                'data' => 'timeslot',
-                'title' => trans('lang.delivery_time_slot_name'),
-
-            ],
-
-            [
-                'data' => 'status',
-                'title' => trans('lang.delivery_time_slot_status'),
-
-            ],
-            [
-                'data' => 'updated_at',
-                'title' => trans('lang.delivery_time_slot_updated_at'),
-                'searchable' => false,
-            ]
-        ];
-        return $columns;
     }
 
     /**
@@ -73,26 +46,7 @@ class DeliveryTimeSlotDataTable extends DataTable
      */
     public function query(DeliveryTimeSlot $model)
     {
-        if (auth()->user()->hasRole('admin')) {
-            return $model->newQuery();
-        }elseif (auth()->user()->hasRole('manager')){
-            $markets = $model->join("discountables", "discountables.coupon_id", "=", "coupons.id")
-                ->join("user_markets", "user_markets.market_id", "=", "discountables.discountable_id")
-                ->where('discountable_type','App\\Models\\Market')
-                ->where("user_markets.user_id",auth()->id())->select("coupons.*");
-
-            $products = $model->join("discountables", "discountables.coupon_id", "=", "coupons.id")
-                ->join("products", "products.id", "=", "discountables.discountable_id")
-                ->where('discountable_type','App\\Models\\Product')
-                ->join("user_markets", "user_markets.market_id", "=", "products.market_id")
-                ->where("user_markets.user_id",auth()->id())
-                ->select("coupons.*")
-                ->union($markets);
-            return $products;
-        }else{
-            $model->newQuery();
-        }
-
+        return $model->newQuery();
     }
 
     /**
@@ -105,15 +59,54 @@ class DeliveryTimeSlotDataTable extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->addAction(['title'=>trans('lang.actions'),'width' => '80px', 'printable' => false, 'responsivePriority' => '100'])
+            ->addAction(['title' => trans('lang.actions'), 'width' => '80px', 'printable' => false, 'responsivePriority' => '100'])
             ->parameters(array_merge(
                 config('datatables-buttons.parameters'), [
                     'language' => json_decode(
                         file_get_contents(base_path('resources/lang/' . app()->getLocale() . '/datatable.json')
-                        ), true),
-                    'order' => [ [5, 'desc'] ],
+                        ), true)
                 ]
             ));
+    }
+
+    /**
+     * Get columns.
+     *
+     * @return array
+     */
+    protected function getColumns()
+    {
+        $columns = [
+            [
+                'data' => 'timeslot',
+                'title' => trans('lang.delivery_time_slot'),
+
+            ],
+            [
+                'data' => 'status',
+                'title' => trans('lang.delivery_time_slot_status'),
+
+            ],
+            [
+                'data' => 'updated_at',
+                'title' => trans('lang.delivery_time_slot_updated_at'),
+                'searchable' => false,
+            ]
+        ];
+
+        $hasCustomField = in_array(DeliveryTimeSlot::class, setting('custom_field_models', []));
+        if ($hasCustomField) {
+            $customFieldsCollection = CustomField::where('custom_field_model', DeliveryTimeSlot::class)->where('in_table', '=', true)->get();
+            foreach ($customFieldsCollection as $key => $field) {
+                array_splice($columns, $field->order - 1, 0, [[
+                    'data' => 'custom_fields.' . $field->name . '.view',
+                    'title' => trans('lang.delivery_time_slot_' . $field->name),
+                    'orderable' => false,
+                    'searchable' => false,
+                ]]);
+            }
+        }
+        return $columns;
     }
 
     /**
@@ -134,6 +127,6 @@ class DeliveryTimeSlotDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'delivery_time_slot_datatable_' . time();
+        return 'categoriesdatatable_' . time();
     }
 }

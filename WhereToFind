@@ -4,3 +4,9 @@ Settings:C:\xampp\htdocs\eshop\resources\views\layouts\settings\menu
 ***************
 @can('package.create')
 route('package.whatever')
+*********************
+How to add a foreign key:
+1- Add the column to the migration
+2- Add it to the model in the fillable and cast it
+3- add the relationship in the models
+4 handle the controller and add the repo

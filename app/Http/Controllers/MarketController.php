@@ -25,6 +25,7 @@ use App\Repositories\CountryRepository;
 use App\Repositories\CustomFieldRepository;
 use App\Repositories\FieldRepository;
 use App\Repositories\MarketRepository;
+use App\Repositories\PackageRepository;
 use App\Repositories\UploadRepository;
 use App\Repositories\UserRepository;
 use Flash;
@@ -59,12 +60,17 @@ class MarketController extends Controller
      * @var CountryRepository
      */
     private $countryRepository;
+    /**
+     * @var PackageRepository
+     */
+    private $packageRepository;
 
     public function __construct(MarketRepository $marketRepo,
                                 CustomFieldRepository $customFieldRepo,
                                 UploadRepository $uploadRepo, UserRepository $userRepo,
                                 FieldRepository $fieldRepository,
-                                CountryRepository $countryRepository)
+                                CountryRepository $countryRepository,
+                                PackageRepository $packageRepository)
     {
         parent::__construct();
         $this->marketRepository = $marketRepo;
@@ -73,6 +79,7 @@ class MarketController extends Controller
         $this->userRepository = $userRepo;
         $this->fieldRepository = $fieldRepository;
         $this->countryRepository = $countryRepository;
+        $this->packageRepository = $packageRepository;
     }
 
     /**
@@ -109,6 +116,7 @@ class MarketController extends Controller
         $drivers = $this->userRepository->getByCriteria(new DriversCriteria())->pluck('name', 'id');
         $field = $this->fieldRepository->pluck('name', 'id');
         $country = $this->countryRepository->pluck('country_name', 'id');
+        $package = $this->packageRepository->pluck('name','id');
         $usersSelected = [];
         $driversSelected = [];
         $fieldsSelected = [];
@@ -126,7 +134,8 @@ class MarketController extends Controller
             ->with('field', $field)
             ->with('fieldsSelected', $fieldsSelected)
             ->with('country', $country)
-            ->with('countrySelected', $countrySelected);
+            ->with('countrySelected', $countrySelected)
+            ->with('package',$package);
     }
 
     /**
@@ -196,6 +205,7 @@ class MarketController extends Controller
         $this->marketRepository->pushCriteria(new MarketsOfUserCriteria(auth()->id()));
         $market = $this->marketRepository->findWithoutFail($id);
         $country = $this->countryRepository->pluck('country_name', 'id');
+        $package = $this->packageRepository->pluck('name','id');
 
         if (empty($market)) {
             Flash::error(__('lang.not_found', ['operator' => __('lang.market')]));
@@ -231,7 +241,8 @@ class MarketController extends Controller
             ->with("driversSelected", $driversSelected)
             ->with('field', $field)
             ->with('fieldsSelected', $fieldsSelected)
-            ->with('country', $country);
+            ->with('country', $country)
+            ->with('package',$package);
     }
 
     /**

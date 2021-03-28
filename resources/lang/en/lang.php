@@ -1071,7 +1071,7 @@ return [
     'package_edit' => 'Edit package',
     'package_table' => 'packages List',
     'package_create' => 'Create package',
-    'package_status' => 'Status',
+    'package_status' => 'Enabled',
 
     'package_name' => 'Package Name',
     'package_name_help' => 'Insert package Name',

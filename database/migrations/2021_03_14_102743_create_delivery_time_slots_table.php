@@ -13,7 +13,7 @@ class CreateDeliveryTimeSlotsTable extends Migration
      */
     public function up()
     {
-        Schema::create('delivery_time_slots', function (Blueprint $table) {
+        Schema::create('dts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('timeslot');
             $table->boolean('status');
@@ -28,6 +28,6 @@ class CreateDeliveryTimeSlotsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('delivery_time_slots');
+        Schema::dropIfExists('dts');
     }
 }

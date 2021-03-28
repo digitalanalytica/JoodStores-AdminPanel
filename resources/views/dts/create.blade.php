@@ -50,7 +50,7 @@
     <div class="card-body">
       {!! Form::open(['route' => 'deliverytimeslot.store']) !!}
       <div class="row">
-        @include('delivery_time_slots.fields')
+        @include('dts.fields')
       </div>
       {!! Form::close() !!}
       <div class="clearfix"></div>

@@ -47,7 +47,11 @@ Route::get('settings', 'API\UserAPIController@settings');
 Route::resource('fields', 'API\FieldAPIController');
 Route::resource('categories', 'API\CategoryAPIController');
 Route::resource('markets', 'API\MarketAPIController');
+/* Add the API calls */
+Route::resource('countries', 'API\CountryAPIController');
+Route::resource('packages', 'API\PackageAPIController');
 
+/*                   */
 Route::resource('faq_categories', 'API\FaqCategoryAPIController');
 Route::get('products/categories', 'API\ProductAPIController@categories');
 Route::resource('products', 'API\ProductAPIController');

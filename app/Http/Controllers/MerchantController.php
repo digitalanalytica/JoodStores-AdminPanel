@@ -35,7 +35,6 @@ class MerchantController extends Controller
         $this->uploadRepository = $uploadRepo;
         $this->merchantRepository = $merchantRepo;
         $this->customFieldRepository = $customFieldRepo;
-
     }
     /**
      * Display a listing of the resource.

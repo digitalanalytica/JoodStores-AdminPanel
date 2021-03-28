@@ -18,7 +18,7 @@ class DeliveryTimeSlotController extends Controller
     public function index(DeliveryTimeSlotDataTable $deliverydataTable)
     {
         //
-        return $deliverydataTable->render('delivery_time_slots.index');
+        return $deliverydataTable->render('dts.index');
     }
 
     /**
@@ -29,7 +29,7 @@ class DeliveryTimeSlotController extends Controller
     public function create()
     {
         //
-        return view('delivery_time_slots.create');
+        return view('dts.create');
     }
 
     /**
@@ -41,15 +41,15 @@ class DeliveryTimeSlotController extends Controller
     public function store(Request $request)
     {
         //
-        $package_object = new DeliveryTimeSlot();
+        $dts = new DeliveryTimeSlot();
         try {
             $request->validate([
                 'timeslot' => 'required|max:30',
                 'status' => 'required|in:0,1'
             ]);
-            $package_object->timeslot =$request->timeslot;
-            $package_object->status = $request->status;
-            $package_object->save();
+            $dts->timeslot =$request->timeslot;
+            $dts->status = $request->status;
+            $dts->save();
             return redirect(route('deliverytimeslot.index'));
         }catch (ValidatorException $e ){
             Flash::error($e->getMessage());
@@ -71,11 +71,18 @@ class DeliveryTimeSlotController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\DeliveryTimeSlot  $deliveryTimeSlot
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function edit(DeliveryTimeSlot $deliveryTimeSlot)
+    public function edit($id)
     {
         //
+        $dts = DeliveryTimeSlot::findOrfail($id);
+        if (empty($dts)) {
+            Flash::error('Delivery Time Slot not found');
+
+            return redirect(route('deliverytimeslot.index'));
+        }
+        return view('dts.edit')->with('dts', $dts);
     }
 
     /**
@@ -85,9 +92,21 @@ class DeliveryTimeSlotController extends Controller
      * @param  \App\DeliveryTimeSlot  $deliveryTimeSlot
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DeliveryTimeSlot $deliveryTimeSlot)
+    public function update($id,Request $request)
     {
-        //
+        $dts = DeliveryTimeSlot::findOrFail($id);
+        try {
+            $request->validate([
+                'timeslot' => 'required|max:30',
+                'status' => 'required|in:0,1'
+            ]);
+            $dts->timeslot =$request->timeslot;
+            $dts->status = $request->status;
+            $dts->save();
+            return redirect(route('deliverytimeslot.index'));
+        }catch (ValidatorException $e ){
+            Flash::error($e->getMessage());
+        }
     }
 
     /**

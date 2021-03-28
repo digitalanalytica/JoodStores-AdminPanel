@@ -39,7 +39,7 @@
       </ul>
     </div>
     <div class="card-body">
-      @include('delivery_time_slots.table')
+      @include('dts.table')
       <div class="clearfix"></div>
     </div>
   </div>
