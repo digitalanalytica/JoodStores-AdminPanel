@@ -41,7 +41,9 @@ class CreateMarketsTable extends Migration
             $table->foreign('country_id')->references('id')->on('countries')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-
+            $table->foreign('package_id')->references('id')->on('packages')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->timestamps();
         });
