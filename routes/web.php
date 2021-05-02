@@ -185,10 +185,18 @@ Route::middleware('auth')->group(function () {
     Route::resource('slides', 'SlideController')->except([
         'show'
     ]);
+    Route::post('slider/remove-mediacount','AdSliderController@removeMedia');
+    Route::resource('slider', 'AdSliderController')->except([
+        'show'
+    ]);
+    Route::post('slider3/remove-mediacount','AdSliderController@removeMedia');
+    Route::resource('slider3', 'AdSliderController')->except([
+        'show'
+    ]);
     Route::resource('package','\App\Http\Controllers\PackageController')->except(['show']);
     Route::resource('country','\App\Http\Controllers\CountryController')->except(['show']);
     Route::resource('deliverytimeslot','\App\Http\Controllers\DeliveryTimeSlotController')->except(['show']);
-    Route::resource('merchants','\App\Http\Controllers\merchantController');
+    Route::resource('merchants','\App\Http\Controllers\MerchantController');
 
 });
 

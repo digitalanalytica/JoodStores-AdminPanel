@@ -40,7 +40,7 @@ class MerchantDataTable extends DataTable
                 return getMediaColumn($merchant, 'image_id');
             })
             ->editColumn('image_cr', function ($merchant) {
-                return getMediaColumn($merchant, 'image_id');
+                return getMediaColumn($merchant, 'image_cr');
             })
             ->addColumn('action', 'merchants.datatables_actions')
             ->rawColumns(array_merge($columns, ['action']));

@@ -82,12 +82,12 @@ class MerchantController extends Controller
             $merchant->customFieldsValues()->createMany(getCustomFieldsValues($customFields, $request));
             if (isset($input['image_id']) && $input['image_id']) {
                 $cacheUpload = $this->uploadRepository->getByUuid($input['image_id']);
-                $mediaItem = $cacheUpload->getMedia('image_id')->first();
-                $mediaItem->copy($merchant, 'image_d');
+                $mediaItem = $cacheUpload->getMedia('image')->first();
+                $mediaItem->copy($merchant, 'image_id');
             }
             if (isset($input['image_cr']) && $input['image_cr']) {
                 $cacheUpload = $this->uploadRepository->getByUuid($input['image_cr']);
-                $mediaItem = $cacheUpload->getMedia('image_cr')->first();
+                $mediaItem = $cacheUpload->getMedia('image')->first();
                 $mediaItem->copy($merchant, 'image_cr');
             }
         } catch (ValidatorException $e) {

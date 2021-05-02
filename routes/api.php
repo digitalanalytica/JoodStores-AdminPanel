@@ -17,6 +17,8 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+use Illuminate\Support\Facades\Route;
+
 
 Route::prefix('driver')->group(function () {
     Route::post('login', 'API\Driver\UserAPIController@login');
@@ -50,6 +52,7 @@ Route::resource('markets', 'API\MarketAPIController');
 /* Add the API calls */
 Route::resource('countries', 'API\CountryAPIController');
 Route::resource('packages', 'API\PackageAPIController');
+Route::post('merchant', 'API\MerchantAPIController@merchant');
 
 /*                   */
 Route::resource('faq_categories', 'API\FaqCategoryAPIController');
@@ -63,6 +66,12 @@ Route::resource('faqs', 'API\FaqAPIController');
 Route::resource('market_reviews', 'API\MarketReviewAPIController');
 Route::resource('currencies', 'API\CurrencyAPIController');
 Route::resource('slides', 'API\SlideAPIController')->except([
+    'show'
+]);
+Route::resource('slider', 'API\AdSliderAPIController')->except([
+    'show'
+]);
+Route::resource('slider3', 'API\Slider3APIController')->except([
     'show'
 ]);
 

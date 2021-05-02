@@ -107,7 +107,7 @@
 <div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">
     <!-- Image Field -->
     <div class="form-group row">
-        {!! Form::label('image', trans("lang.field_image"), ['class' => 'col-3 control-label text-right']) !!}
+        {!! Form::label('image_cr', trans("lang.merchant_image_cr"), ['class' => 'col-3 control-label text-right']) !!}
         <div class="col-9">
             <div style="width: 100%" class="dropzone image_cr" id="image_cr" data-field="image">
                 <input type="hidden" name="image_cr">

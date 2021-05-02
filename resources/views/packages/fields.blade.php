@@ -15,62 +15,6 @@
     </div>
 
 
-{{--<!-- Discount Field -->--}}
-{{--<div class="form-group row ">--}}
-{{--  {!! Form::label('discount', trans("lang.coupon_discount"), ['class' => 'col-3 control-label text-right']) !!}--}}
-{{--  <div class="col-9">--}}
-{{--    {!! Form::number('discount', null,  ['class' => 'form-control','placeholder'=>  trans("lang.coupon_discount_placeholder"),'step'=>"any", 'min'=>"0"]) !!}--}}
-{{--    <div class="form-text text-muted">--}}
-{{--      {!! trans("lang.coupon_discount_help")   !!}--}}
-{{--    </div>--}}
-{{--  </div>--}}
-{{--</div>--}}
-
-
-
-{{--<!-- Description Field -->--}}
-{{--<div class="form-group row ">--}}
-{{--  {!! Form::label('description', trans("lang.coupon_description"), ['class' => 'col-3 control-label text-right']) !!}--}}
-{{--  <div class="col-9">--}}
-{{--    {!! Form::textarea('description', null, ['class' => 'form-control','placeholder'=>--}}
-{{--     trans("lang.coupon_description_placeholder")  ]) !!}--}}
-{{--    <div class="form-text text-muted">{{ trans("lang.coupon_description_help") }}</div>--}}
-{{--  </div>--}}
-{{--</div>--}}
-
-{{--</div>--}}
-{{--<div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">--}}
-
-{{--  <!-- Product Id Field -->--}}
-{{--  <div class="form-group row ">--}}
-{{--    {!! Form::label('products[]', trans("lang.coupon_product_id"),['class' => 'col-3 control-label text-right']) !!}--}}
-{{--    <div class="col-9">--}}
-{{--      {!! Form::select('products[]', $product, $productsSelected, ['class' => 'select2 form-control', 'multiple'=>'multiple']) !!}--}}
-{{--      <div class="form-text text-muted">{{ trans("lang.coupon_product_id_help") }}</div>--}}
-{{--    </div>--}}
-{{--  </div>--}}
-
-{{--<!-- Market Id Field -->--}}
-{{--<div class="form-group row ">--}}
-{{--  {!! Form::label('markets', trans("lang.coupon_market_id"),['class' => 'col-3 control-label text-right']) !!}--}}
-{{--  <div class="col-9">--}}
-{{--    {!! Form::select('markets[]', $market, $marketsSelected, ['class' => 'select2 form-control', 'multiple'=>'multiple']) !!}--}}
-{{--    <div class="form-text text-muted">{{ trans("lang.coupon_market_id_help") }}</div>--}}
-{{--  </div>--}}
-{{--</div>--}}
-
-
-{{--<!-- Category Id Field -->--}}
-{{--<div class="form-group row ">--}}
-{{--  {!! Form::label('categories[]', trans("lang.coupon_category_id"),['class' => 'col-3 control-label text-right']) !!}--}}
-{{--  <div class="col-9">--}}
-{{--    {!! Form::select('categories[]', $category, $categoriesSelected, ['class' => 'select2 form-control', 'multiple'=>'multiple']) !!}--}}
-{{--    <div class="form-text text-muted">{{ trans("lang.coupon_category_id_help") }}</div>--}}
-{{--  </div>--}}
-{{--</div>--}}
-
-
-<!-- Expires At Field -->
     <!-- Monthly price Field -->
     <div class="form-group row ">
         {!! Form::label('monthly_price', trans('lang.package_monthly_price'), ['class' => 'col-3 control-label text-right']) !!}
@@ -124,14 +68,7 @@
             </label>
         </div>
     </div>
-{{--    <div class="form-group row">--}}
-{{--        {!! Form::label('status', 'status',['class' => 'col-3 control-label text-right']) !!}--}}
-{{--        <div class="col-9 icheck-{{setting('theme_color')}}">--}}
-{{--            {!! Form::hidden('status', 0) !!}--}}
-{{--            {!! Form::checkbox('status', 1, null) !!}--}}
-{{--            <label for="status"></label>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+
 
 </div>
 
