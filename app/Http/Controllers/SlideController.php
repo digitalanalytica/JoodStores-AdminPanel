@@ -18,11 +18,12 @@ use App\Repositories\CustomFieldRepository;
 use App\Repositories\UploadRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\MarketRepository;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Prettus\Validator\Exceptions\ValidatorException;
+use Laracasts\Flash\Flash;
+
 
 class SlideController extends Controller
 {

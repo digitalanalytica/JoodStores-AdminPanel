@@ -280,7 +280,7 @@
             @endcan
             @can('slider.index')
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('slider*') ? 'active' : '' }}" href="{!! route('slider.index') !!}">@if($icons)<i class="nav-icon fa fa-magic"></i>@endif<p>Slider-2 <span class="right badge badge-danger">New</span></p></a>
+                    <a class="nav-link {{ Request::is('slider/*') ? 'active' : '' }}" href="{!! route('slider.index') !!}">@if($icons)<i class="nav-icon fa fa-magic"></i>@endif<p>Slider-2 <span class="right badge badge-danger">New</span></p></a>
                 </li>
             @endcan
             @can('slider3.index')

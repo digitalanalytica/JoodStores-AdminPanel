@@ -100,7 +100,7 @@ class AdSliderController extends Controller
      *
      * @return Application|RedirectResponse|Redirector|Response
      */
-    public function store(CreateAdSliderRequest $request)
+    public function store(Request $request)
     {
         $input = $request->all();
         $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->slideRepository->model());

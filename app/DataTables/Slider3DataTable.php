@@ -34,14 +34,14 @@ class Slider3DataTable extends DataTable
         $dataTable = new EloquentDataTable($query);
         $columns = array_column($this->getColumns(), 'data');
         $dataTable = $dataTable
-            ->editColumn('image', function ($slider) {
-                return getMediaColumn($slider, 'image');
+            ->editColumn('image', function ($slider3) {
+                return getMediaColumn($slider3, 'image');
             })
-            ->editColumn('updated_at', function ($slider) {
-                return getDateColumn($slider, 'updated_at');
+            ->editColumn('updated_at', function ($slider3) {
+                return getDateColumn($slider3, 'updated_at');
             })
-            ->editColumn('enabled', function ($slider) {
-                return getBooleanColumn($slider, 'enabled');
+            ->editColumn('enabled', function ($slider3) {
+                return getBooleanColumn($slider3, 'enabled');
             })
             ->addColumn('action', 'slider3.datatables_actions')
             ->rawColumns(array_merge($columns, ['action']));

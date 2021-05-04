@@ -97,7 +97,7 @@ class Slider3Controller extends Controller
     /**
      * Store a newly created AdSlider in storage.
      *
-     * @param CreateAdSliderRequest $request
+     * @param CreateSlider3Request $request
      *
      * @return Application|RedirectResponse|Redirector|Response
      */

@@ -189,8 +189,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('slider', 'AdSliderController')->except([
         'show'
     ]);
-    Route::post('slider3/remove-mediacount','AdSliderController@removeMedia');
-    Route::resource('slider3', 'AdSliderController')->except([
+    Route::post('slider3/remove-mediacount','Slider3Controller@removeMedia');
+    Route::resource('slider3', 'Slider3Controller')->except([
         'show'
     ]);
     Route::resource('package','\App\Http\Controllers\PackageController')->except(['show']);

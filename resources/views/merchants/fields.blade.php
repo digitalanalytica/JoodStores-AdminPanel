@@ -31,6 +31,14 @@
         </div>
     </div>
 
+    <!-- package Field -->
+    <div class="form-group row ">
+        {!! Form::label('package_id','package',['class' => 'col-3 control-label text-right']) !!}
+        <div class="col-9">
+            {!! Form::select('package_id', $package, null, ['class' => 'select2 form-control' , 'multiple'=>'multiple']) !!}
+            <div class="form-text text-muted">{{ trans("lang.market_fields_help") }}</div>
+        </div>
+    </div>
     <!-- Phone Field -->
     <div class="form-group row ">
         {!! Form::label('phone', trans("lang.merchant_phone"), ['class' => 'col-3 control-label text-right']) !!}

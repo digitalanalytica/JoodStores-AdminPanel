@@ -13,6 +13,13 @@
     <p>{!! $merchant->full_name !!}</p>
   </div>
 </div>
+<!-- Name Field -->
+<div class="form-group row col-6">
+  {!! Form::label('package_id', trans('lang.package'), ['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+    <p>{!! $package !!}</p>
+  </div>
+</div>
 
 <!-- Shop name Field -->
 <div class="form-group row col-6">

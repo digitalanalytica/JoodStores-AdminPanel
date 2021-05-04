@@ -22,7 +22,7 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="{{url('/dashboard')}}"><i class="fa fa-dashboard"></i> {{trans('lang.dashboard')}}</a></li>
-          <li class="breadcrumb-item"><a href="{!! route('slider.index') !!}">{{trans('lang.slide_plural')}}</a>
+          <li class="breadcrumb-item"><a href="{!! route('slider3.index') !!}">{{trans('lang.slide_plural')}}</a>
           </li>
           <li class="breadcrumb-item active">{{trans('lang.slide_create')}}</li>
         </ol>
@@ -41,7 +41,7 @@
       <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
         @can('slider.index')
         <li class="nav-item">
-          <a class="nav-link" href="{!! route('slider.index') !!}"><i class="fa fa-list mr-2"></i>{{trans('lang.slide_table')}}</a>
+          <a class="nav-link" href="{!! route('slider3.index') !!}"><i class="fa fa-list mr-2"></i>{{trans('lang.slide_table')}}</a>
         </li>
         @endcan
         <li class="nav-item">
@@ -50,9 +50,9 @@
       </ul>
     </div>
     <div class="card-body">
-      {!! Form::open(['route' => 'slider.store']) !!}
+      {!! Form::open(['route' => 'slider3.store']) !!}
       <div class="row">
-        @include('slider.fields')
+        @include('slider3.fields')
       </div>
       {!! Form::close() !!}
       <div class="clearfix"></div>

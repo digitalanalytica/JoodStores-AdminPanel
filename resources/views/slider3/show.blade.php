@@ -11,7 +11,7 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="{{url('/')}}"><i class="fa fa-dashboard"></i> {{trans('lang.dashboard')}}</a></li>
-          <li class="breadcrumb-itema ctive"><a href="{!! route('slider.index') !!}">{{trans('lang.slide_plural')}}</a>
+          <li class="breadcrumb-itema ctive"><a href="{!! route('slider3.index') !!}">{{trans('lang.slide_plural')}}</a>
           </li>
         </ol>
       </div><!-- /.col -->
@@ -24,20 +24,20 @@
     <div class="card-header">
       <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
         <li class="nav-item">
-          <a class="nav-link" href="{!! route('slider.index') !!}"><i class="fa fa-list mr-2"></i>{{trans('lang.slide_table')}}</a>
+          <a class="nav-link" href="{!! route('slider3.index') !!}"><i class="fa fa-list mr-2"></i>{{trans('lang.slide_table')}}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="{!! route('slider.create') !!}"><i class="fa fa-plus mr-2"></i>{{trans('lang.slide_create')}}</a>
+          <a class="nav-link active" href="{!! route('slider3.create') !!}"><i class="fa fa-plus mr-2"></i>{{trans('lang.slide_create')}}</a>
         </li>
       </ul>
     </div>
     <div class="card-body">
       <div class="row">
-        @include('slider.show_fields')
+        @include('slider3.show_fields')
 
         <!-- Back Field -->
         <div class="form-group col-12 text-right">
-          <a href="{!! route('slider.index') !!}" class="btn btn-default"><i class="fa fa-undo"></i> {{trans('lang.back')}}</a>
+          <a href="{!! route('slider3.index') !!}" class="btn btn-default"><i class="fa fa-undo"></i> {{trans('lang.back')}}</a>
         </div>
       </div>
       <div class="clearfix"></div>

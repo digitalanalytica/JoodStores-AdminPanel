@@ -16,9 +16,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Illuminate\Support\Facades\Response;
+use Laracasts\Flash\Flash;
 use Prettus\Repository\Exceptions\RepositoryException;
-use Flash;
 
 /**
  * Class SlideController

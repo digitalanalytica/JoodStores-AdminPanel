@@ -7,6 +7,7 @@ use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
+use App\Package;
 
 class Merchant extends Model implements HasMedia
 {
@@ -25,6 +26,7 @@ class Merchant extends Model implements HasMedia
         'shop_name',
         'email',
         'phone',
+        'package_id'
     ];
 
     /**
@@ -37,6 +39,7 @@ class Merchant extends Model implements HasMedia
         'shop_name' => 'string',
         'email' => 'string',
         'phone' => 'string',
+        'package_id' => 'integer',
     ];
 
     /**
@@ -49,6 +52,7 @@ class Merchant extends Model implements HasMedia
         'shop_name' => 'required',
         'email' => 'required',
         'phone' => 'required',
+        'package_id' => 'required',
     ];
 
     /**
@@ -110,5 +114,8 @@ class Merchant extends Model implements HasMedia
             ->get()->toArray();
 
         return convertToAssoc($array,'name');
+    }
+    public function package(){
+        return $this->belongsTo(Package::class, 'id');
     }
 }

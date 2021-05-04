@@ -8,14 +8,12 @@
  */
 
 namespace App\Http\Controllers\API;
-
-
+use App\Slider3;
 use App\Repositories\Slider3Repository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Illuminate\Support\Facades\Response;
 use Prettus\Repository\Exceptions\RepositoryException;
 use Laracasts\Flash\Flash;
 
@@ -25,15 +23,11 @@ use Laracasts\Flash\Flash;
  * @package App\Http\Controllers\API
  */
 
-class AdSliderAPIController extends Controller
+class Slider3APIController extends Controller
 {
-    /** @var  AdSliderRepository */
+    /** @var  Slider3Repository */
     private $slideRepository;
 
-    /**
-     * AdSliderAPIController constructor.
-     * @param AdSliderRepository $slideRepo
-     */
     public function __construct(Slider3Repository $slideRepo)
     {
         $this->slideRepository = $slideRepo;
@@ -54,9 +48,9 @@ class AdSliderAPIController extends Controller
         } catch (RepositoryException $e) {
             Flash::error($e->getMessage());
         }
-        $slides = $this->slideRepository->all();
+        $slider3 = $this->slideRepository->all();
 
-        return $this->sendResponse($slides->toArray(), 'Slides retrieved successfully');
+        return $this->sendResponse($slider3->toArray(), 'Slides retrieved successfully');
     }
 
     /**
@@ -71,13 +65,13 @@ class AdSliderAPIController extends Controller
     {
         /** @var Slide $slide */
         if (!empty($this->slideRepository)) {
-            $slide = $this->slideRepository->findWithoutFail($id);
+            $slider3 = $this->slideRepository->findWithoutFail($id);
         }
 
-        if (empty($slide)) {
+        if (empty($slider3)) {
             return $this->sendError('Slide not found');
         }
 
-        return $this->sendResponse($slide->toArray(), 'Slide retrieved successfully');
+        return $this->sendResponse($slider3->toArray(), 'Slide retrieved successfully');
     }
 }

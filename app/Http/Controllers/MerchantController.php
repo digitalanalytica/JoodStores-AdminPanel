@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Criteria\Users\DriversCriteria;
-use App\Criteria\Users\ManagersCriteria;
 use App\DataTables\MerchantDataTable;
 use App\Merchant;
 use App\Repositories\CustomFieldRepository;
 use App\Repositories\MerchantRepository;
 use App\Repositories\UploadRepository;
+use App\Repositories\PackageRepository;
 use Illuminate\Http\Request;
 use Laracasts\Flash\Flash;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -28,13 +27,21 @@ class MerchantController extends Controller
      * @var MerchantRepository
      */
     private $merchantRepository;
+    /**
+     * @var PackageRepository
+     */
+    private $packageRepository;
 
-    public function __construct(UploadRepository $uploadRepo, MerchantRepository $merchantRepo, CustomFieldRepository $customFieldRepo)
+    public function __construct(UploadRepository $uploadRepo, 
+    MerchantRepository $merchantRepo,
+     CustomFieldRepository $customFieldRepo,
+     PackageRepository $packageRepo)
     {
         parent::__construct();
         $this->uploadRepository = $uploadRepo;
         $this->merchantRepository = $merchantRepo;
         $this->customFieldRepository = $customFieldRepo;
+        $this->packageRepository = $packageRepo;
     }
     /**
      * Display a listing of the resource.
@@ -55,12 +62,15 @@ class MerchantController extends Controller
     public function create()
     {
         //
+        $package = $this->packageRepository->pluck('name','id');
      $hasCustomField = in_array($this->merchantRepository->model(), setting('custom_field_models', []));
         if ($hasCustomField) {
             $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->merchantRepository->model());
             $html = generateCustomField($customFields);
         }
-        return view('merchants.create')->with("customFields", isset($html) ? $html : false);
+        return view('merchants.create')
+        ->with("customFields", isset($html) ? $html : false)
+        ->with('package',$package);
     }
 
     /**
@@ -108,6 +118,7 @@ class MerchantController extends Controller
     public function show($id)
     {
         $merchant = Merchant::findOrFail($id);
+        $package = $merchant->package->name;
 
         if (empty($merchant)) {
             Flash::error('merchant not found');
@@ -115,7 +126,9 @@ class MerchantController extends Controller
             return redirect(route('merchants.index'));
         }
 
-        return view('merchants.show')->with('merchant', $merchant);
+        return view('merchants.show')
+        ->with('merchant', $merchant)
+        ->with('package', $package);
     }
 
     /**
@@ -127,6 +140,8 @@ class MerchantController extends Controller
     public function edit($id)
     {
         //
+        $package = $this->packageRepository->pluck('name','id');
+
         $merchant = Merchant::findOrFail($id);
         if (empty($merchant)) {
             Flash::error('Merchent not found');
@@ -134,7 +149,9 @@ class MerchantController extends Controller
             return redirect(route('merchants.index'));
         }
 
-        return view('merchants.edit')->with('merchant', $merchant);
+        return view('merchants.edit')
+        ->with('merchant', $merchant)
+        ->with('package', $package);
     }
 
     /**

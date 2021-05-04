@@ -19,6 +19,11 @@ class CreateMerchantsTable extends Migration
             $table->string('shop_name');
             $table->string('email')->unique();
             $table->string('phone', 50);
+            $table->unsignedBigInteger('package_id');
+            $table->foreign('package_id')->references('id')
+            ->on('packages')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -42,6 +42,9 @@ class MerchantDataTable extends DataTable
             ->editColumn('image_cr', function ($merchant) {
                 return getMediaColumn($merchant, 'image_cr');
             })
+            ->editColumn('merchant.package.name', function ($merchant) {
+                return getMediaColumn($merchant, 'merchant.package.name');
+            })
             ->addColumn('action', 'merchants.datatables_actions')
             ->rawColumns(array_merge($columns, ['action']));
 
@@ -57,6 +60,7 @@ class MerchantDataTable extends DataTable
     public function query(Merchant $model)
     {
         return $model->newQuery();
+        
     }
     /**
      * Optional method if you want to use html builder.
@@ -84,6 +88,7 @@ class MerchantDataTable extends DataTable
      */
     protected function getColumns()
     {
+
         $columns = [
             [
                 'data' => 'image_id',
@@ -121,7 +126,6 @@ class MerchantDataTable extends DataTable
                 'searchable' => false,
             ]
         ];
-
         $hasCustomField = in_array(Merchant::class, setting('custom_field_models', []));
         if ($hasCustomField) {
             $customFieldsCollection = CustomField::where('custom_field_model', Merchant::class)->where('in_table', '=', true)->get();
