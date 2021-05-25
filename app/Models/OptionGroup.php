@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class OptionGroup
@@ -19,7 +19,8 @@ class OptionGroup extends Model
 
 
     public $fillable = [
-        'name'
+        'name',
+        'name_ar'
     ];
 
     /**
@@ -28,7 +29,8 @@ class OptionGroup extends Model
      * @var array
      */
     protected $casts = [
-        'name' => 'string'
+        'name' => 'string',
+        'name_ar' => 'string'
     ];
 
     /**
@@ -37,7 +39,8 @@ class OptionGroup extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required'
+        'name' => 'required',
+        'name_ar' => 'required'
     ];
 
     /**

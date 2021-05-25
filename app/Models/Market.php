@@ -11,7 +11,8 @@ namespace App\Models;
 
 use App\Country;
 use App\Package;
-use Eloquent as Model;
+use App\Models\CustomFieldValue;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -64,6 +65,8 @@ class Market extends Model implements HasMedia
     public $fillable = [
         'name',
         'description',
+        'name_ar',
+        'description_ar',
         'address',
         'latitude',
         'country',
@@ -90,6 +93,8 @@ class Market extends Model implements HasMedia
     protected $casts = [
         'name' => 'string',
         'description' => 'string',
+        'name_ar' => 'string',
+        'description_ar' => 'string',
         'image' => 'string',
         'address' => 'string',
         'latitude' => 'string',
@@ -116,6 +121,8 @@ class Market extends Model implements HasMedia
     public static $adminRules = [
         'name' => 'required',
         'description' => 'required',
+        'name_ar' => 'required',
+        'description_ar' => 'required',
         'delivery_fee' => 'nullable|numeric|min:0',
         'address' => 'required',
         'longitude' => 'required|numeric',
@@ -133,6 +140,8 @@ class Market extends Model implements HasMedia
     public static $managerRules = [
         'name' => 'required',
         'description' => 'required',
+        'name_ar' => 'required',
+        'description_ar' => 'required',
         'delivery_fee' => 'nullable|numeric|min:0',
         'address' => 'required',
         'longitude' => 'required|numeric',

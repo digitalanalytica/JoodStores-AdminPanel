@@ -42,12 +42,16 @@ class PackageController extends Controller
         try {
             $request->validate([
                 'name' => 'required|max:30',
+                'name_ar' => 'required|max:30',
                 'monthly_price' => 'required|numeric',
                 'six_month_price' => 'required|numeric',
                 'one_year_price' => 'required|numeric',
                 'status' => 'required|in:0,1'
             ]);
             $package_object->name =$request->name;
+            $package_object->name_ar =$request->name_ar;
+            $package_object->description = $request->description;
+            $package_object->description_ar = $request->description_ar;
             $package_object->monthly_price = $request->monthly_price;
             $package_object->six_month_price = $request->six_month_price;
             $package_object->one_year_price = $request->one_year_price;
@@ -124,6 +128,9 @@ class PackageController extends Controller
                 'status' => 'required|in:0,1'
             ]);
             $package_object->name =$request->name;
+            $package_object->name_ar =$request->name_ar;
+            $package_object->description = $request->description;
+            $package_object->description_ar = $request->description_ar;
             $package_object->monthly_price = $request->monthly_price;
             $package_object->six_month_price = $request->six_month_price;
             $package_object->one_year_price = $request->one_year_price;

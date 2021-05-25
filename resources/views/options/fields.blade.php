@@ -13,6 +13,17 @@
   </div>
 </div>
 
+<!-- Name Field -->
+<div class="form-group row ">
+  {!! Form::label('name_ar', trans("lang.option_name_ar"), ['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+    {!! Form::text('name_ar', null,  ['class' => 'form-control','placeholder'=>  trans("lang.option_name_ar_placeholder")]) !!}
+    <div class="form-text text-muted">
+      {{ trans("lang.option_name_ar_help") }}
+    </div>
+  </div>
+</div>
+
 <!-- Image Field -->
 <div class="form-group row">
   {!! Form::label('image', trans("lang.option_image"), ['class' => 'col-3 control-label text-right']) !!}
@@ -112,7 +123,15 @@
     <div class="form-text text-muted">{{ trans("lang.option_option_group_id_help") }}</div>
   </div>
 </div>
-
+<!-- Description in Arabic -->
+<div class="form-group row ">
+  {!! Form::label('description_ar', trans("lang.option_description_ar"), ['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+    {!! Form::textarea('description_ar', null, ['class' => 'form-control','placeholder'=>
+     trans("lang.option_description_ar_placeholder")  ]) !!}
+    <div class="form-text text-muted">{{ trans("lang.option_description_ar_help") }}</div>
+  </div>
+</div>
 </div>
 @if($customFields)
 <div class="clearfix"></div>

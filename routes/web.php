@@ -99,6 +99,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories', 'CategoryController')->except([
         'show'
     ]);
+    /**
+     * Main Category Routes
+     */
+    Route::post('maincategories/remove-media', 'MainCategoryController@removeMedia'); 
+    Route::resource('maincategories', 'MainCategoryController')->except([
+        'show'
+    ]);
 
     Route::resource('faqCategories', 'FaqCategoryController')->except([
         'show'

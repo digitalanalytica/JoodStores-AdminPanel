@@ -14,6 +14,16 @@
 </div>
 </div>
 <div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">
+  <!-- Name Field -->
+<div class="form-group row ">
+  {!! Form::label('name_ar', trans("lang.option_group_name_ar"), ['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+    {!! Form::text('name_ar', null,  ['class' => 'form-control','placeholder'=>  trans("lang.option_group_name_ar_placeholder")]) !!}
+    <div class="form-text text-muted">
+      {{ trans("lang.option_group_name_ar_help") }}
+    </div>
+  </div>
+</div>
 </div>
 @if($customFields)
 <div class="clearfix"></div>

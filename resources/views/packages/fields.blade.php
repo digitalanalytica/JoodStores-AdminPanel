@@ -10,11 +10,20 @@
             <div class="form-text text-muted">
                 {{ trans("lang.package_name_help") }}
             </div>
-
         </div>
     </div>
 
+    <!-- Name  Field -->
+    <div class="form-group row ">
+        {!! Form::label('name_ar', trans("lang.package_name_ar"), ['class' => 'col-3 control-label text-right']) !!}
+        <div class="col-9">
+            {!! Form::text('name_ar', null,  ['class' => 'form-control','placeholder'=>  trans("lang.package_name_ar_placeholder")]) !!}
+            <div class="form-text text-muted">
+                {{ trans("lang.package_name_ar_help") }}
+            </div>
 
+        </div>
+    </div>
     <!-- Monthly price Field -->
     <div class="form-group row ">
         {!! Form::label('monthly_price', trans('lang.package_monthly_price'), ['class' => 'col-3 control-label text-right']) !!}
@@ -68,10 +77,27 @@
             </label>
         </div>
     </div>
-
-
 </div>
-
+<div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">
+    <!-- Description Field -->
+    <div class="form-group row ">
+        {!! Form::label('description', trans("lang.package_description"), ['class' => 'col-3 control-label text-right']) !!}
+        <div class="col-9">
+            {!! Form::textarea('description', null, ['class' => 'form-control','placeholder'=>
+            trans("lang.package_description_placeholder")  ]) !!}
+            <div class="form-text text-muted">{!! trans("lang.Package_description_help") !!}</div>
+        </div>
+    </div>
+    <!--Arabic Description Field -->
+    <div class="form-group row ">
+        {!! Form::label('description_ar', trans("lang.market_description_ar"), ['class' => 'col-3 control-label text-right']) !!}
+        <div class="col-9">
+            {!! Form::textarea('description_ar', null, ['class' => 'form-control','placeholder'=>
+            trans("lang.market_description_ar_placeholder")  ]) !!}
+            <div class="form-text text-muted">{{ trans("lang.market_description_ar_help") }}</div>
+        </div>
+    </div>
+</div>
 <!-- Submit Field -->
 <div class="form-group col-12 text-right">
     <button type="submit" class="btn btn-{{setting('theme_color')}}"><i

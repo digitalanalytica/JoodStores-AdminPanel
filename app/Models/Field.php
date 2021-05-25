@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
+use Illuminate\Database\Eloquent\Model;
+
 
 /**
  * Class Field
@@ -29,7 +30,9 @@ class Field extends Model implements HasMedia
 
     public $fillable = [
         'name',
-        'description'
+        'description',
+        'name_ar',
+        'description_ar',
     ];
 
     /**
@@ -40,7 +43,9 @@ class Field extends Model implements HasMedia
     protected $casts = [
         'name' => 'string',
         'description' => 'string',
-        'image' => 'string'
+        'image' => 'string',
+        'name_ar' => 'string',
+        'description_ar' => 'string',
     ];
 
     /**
@@ -50,6 +55,7 @@ class Field extends Model implements HasMedia
      */
     public static $rules = [
         'name' => 'required',
+        'name_ar' => 'required',
     ];
 
     /**

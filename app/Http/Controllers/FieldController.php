@@ -11,7 +11,7 @@ use App\Repositories\CustomFieldRepository;
 use App\Repositories\UploadRepository;
 use App\Repositories\MarketRepository;
 use Exception;
-use Flash;
+use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;

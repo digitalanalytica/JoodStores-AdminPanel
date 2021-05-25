@@ -6,14 +6,17 @@ use App\DataTables\CategoryDataTable;
 use App\Http\Requests;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Models\MainCategory;
 use App\Repositories\CategoryRepository;
 use App\Repositories\CustomFieldRepository;
 use App\Repositories\UploadRepository;
-use Flash;
+use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Prettus\Validator\Exceptions\ValidatorException;
+use App\Repositories\MainCategoryRepository;
+
 
 class CategoryController extends Controller
 {
@@ -26,16 +29,25 @@ class CategoryController extends Controller
     private $customFieldRepository;
 
     /**
+     * @var MainCategoryRepository
+     */
+    private $mainCategoryRepository;
+
+    /**
   * @var UploadRepository
   */
 private $uploadRepository;
 
-    public function __construct(CategoryRepository $categoryRepo, CustomFieldRepository $customFieldRepo , UploadRepository $uploadRepo)
+    public function __construct(CategoryRepository $categoryRepo, 
+    CustomFieldRepository $customFieldRepo,
+     UploadRepository $uploadRepo,
+     MainCategoryRepository $maincatRepo)
     {
         parent::__construct();
         $this->categoryRepository = $categoryRepo;
         $this->customFieldRepository = $customFieldRepo;
         $this->uploadRepository = $uploadRepo;
+        $this-> mainCategoryRepository = $maincatRepo;
     }
 
     /**
@@ -57,13 +69,16 @@ private $uploadRepository;
     public function create()
     {
         
-        
+        $mainCat = $this->mainCategoryRepository->pluck('name','id');
         $hasCustomField = in_array($this->categoryRepository->model(),setting('custom_field_models',[]));
             if($hasCustomField){
                 $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->categoryRepository->model());
                 $html = generateCustomField($customFields);
             }
-        return view('categories.create')->with("customFields", isset($html) ? $html : false);
+        return view('categories.create')
+        ->with("customFields", isset($html) ? $html : false)
+        ->with("maincategories", $mainCat);
+
     }
 
     /**
@@ -124,7 +139,7 @@ private $uploadRepository;
     public function edit($id)
     {
         $category = $this->categoryRepository->findWithoutFail($id);
-        
+        $mainCat = $this->mainCategoryRepository->pluck('name','id');
         
 
         if (empty($category)) {
@@ -139,7 +154,10 @@ private $uploadRepository;
             $html = generateCustomField($customFields, $customFieldsValues);
         }
 
-        return view('categories.edit')->with('category', $category)->with("customFields", isset($html) ? $html : false);
+        return view('categories.edit')->with('category', $category)
+        ->with("customFields", isset($html) ? $html : false)
+        ->with("maincategories", $mainCat);
+
     }
 
     /**

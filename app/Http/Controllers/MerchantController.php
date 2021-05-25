@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\MerchantDataTable;
 use App\Merchant;
+use App\Package;
 use App\Repositories\CustomFieldRepository;
 use App\Repositories\MerchantRepository;
 use App\Repositories\UploadRepository;
@@ -118,8 +119,7 @@ class MerchantController extends Controller
     public function show($id)
     {
         $merchant = Merchant::findOrFail($id);
-        $package = $merchant->package->name;
-
+        $package = Package::query()->findOrFail($merchant->package_id);
         if (empty($merchant)) {
             Flash::error('merchant not found');
 

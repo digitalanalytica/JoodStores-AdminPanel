@@ -24,7 +24,38 @@
 </div>
 </div>
 <div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">
+<!-- Name Field -->
+<div class="form-group row ">
+  {!! Form::label('name_ar', trans("lang.category_name_ar"), ['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+    {!! Form::text('name_ar', null,  ['class' => 'form-control','placeholder'=>  trans("lang.category_name_ar_placeholder")]) !!}
+    <div class="form-text text-muted">
+      {{ trans("lang.category_name_ar_help") }}
+    </div>
+  </div>
+</div>
 
+<!-- Description Field -->
+<div class="form-group row ">
+  {!! Form::label('description_ar', trans("lang.category_description_ar"), ['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+    {!! Form::textarea('description_ar', null, ['class' => 'form-control','placeholder'=>
+     trans("lang.category_description_ar_placeholder")  ]) !!}
+    <div class="form-text text-muted">{{ trans("lang.category_description_ar_help") }}</div>
+  </div>
+</div>
+</div>
+<div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">
+
+  <!-- main Cat Field -->
+  <div class="form-group row ">
+
+    {!! Form::label('maincategory_id','Package:',['class' => 'col-3 control-label text-right']) !!}
+      <div class="col-9">
+        {!! Form::select('maincategory_id', $maincategories, null, ['class' => 'select2 form-control']) !!}
+        <div class="form-text text-muted">{{ trans("lang.market_fields_help") }}</div>
+      </div>
+  </div>
 <!-- Image Field -->
 <div class="form-group row">
   {!! Form::label('image', trans("lang.category_image"), ['class' => 'col-3 control-label text-right']) !!}

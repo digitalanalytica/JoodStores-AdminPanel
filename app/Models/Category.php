@@ -9,7 +9,7 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -42,7 +42,10 @@ class Category extends Model implements HasMedia
 
     public $fillable = [
         'name',
-        'description'
+        'description',
+        'name_ar',
+        'description_ar',
+        'maincategory_id'
     ];
 
     /**
@@ -51,9 +54,12 @@ class Category extends Model implements HasMedia
      * @var array
      */
     protected $casts = [
-        'name' => 'string',
+        'name_ar' => 'string',
         'description' => 'string',
-        'image' => 'string'
+        'image' => 'string',
+        'name_ar' => 'string',
+        'description_ar' => 'string',
+        'maincategory_id' => 'integer'
     ];
 
     /**
@@ -63,7 +69,10 @@ class Category extends Model implements HasMedia
      */
     public static $rules = [
         'name' => 'required',
-        'description' => 'required'
+        'description' => 'required',
+        'name_ar' => 'required',
+        'description_ar' => 'required',
+        'maincategory_id' => 'required'
     ];
 
     /**
@@ -162,6 +171,7 @@ class Category extends Model implements HasMedia
     {
         return $this->belongsToMany(\App\Models\Market::class, 'products');
     }
-
-    
+    public function maincategory(){
+        return $this->belongsTo(MainCategory::class, 'maincategory_id');
+    }    
 }

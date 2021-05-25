@@ -54,11 +54,17 @@
         </ul>
     </li>
 @endcan
+@can('maincategories.index')
+    <li class="nav-item">
+        <a class="nav-link {{ Request::is('maincategories*') ? 'active' : '' }}" href="{!! route('maincategories.index') !!}">@if($icons)
+                <i class="nav-icon fa fa-folder"></i>@endif<p>Main Categories</p></a>
+    </li>
+@endcan
 
 @can('categories.index')
     <li class="nav-item">
         <a class="nav-link {{ Request::is('categories*') ? 'active' : '' }}" href="{!! route('categories.index') !!}">@if($icons)
-                <i class="nav-icon fa fa-folder"></i>@endif<p>{{trans('lang.category_plural')}}</p></a>
+                <i class="nav-icon fa fa-tag"></i>@endif<p>{{trans('lang.category_plural')}}</p></a>
     </li>
 @endcan
 

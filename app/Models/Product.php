@@ -9,7 +9,7 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -51,17 +51,21 @@ class Product extends Model implements HasMedia
      */
     public static $rules = [
         'name' => 'required',
+        'name_ar' => 'required',
         'price' => 'required|numeric|min:0',
         'description' => 'required',
+        'description_ar' => 'required',
         'market_id' => 'required|exists:markets,id',
         'category_id' => 'required|exists:categories,id'
     ];
 
     public $table = 'products';
     public $fillable = [
+        'name_ar',
         'name',
         'price',
         'discount_price',
+        'description_ar',
         'description',
         'capacity',
         'package_items_count',
@@ -78,10 +82,12 @@ class Product extends Model implements HasMedia
      */
     protected $casts = [
         'name' => 'string',
+        'name_ar' => 'string',
         'image' => 'string',
         'price' => 'double',
         'discount_price' => 'double',
         'description' => 'string',
+        'description_ar' => 'string',
         'capacity' => 'double',
         'package_items_count' => 'integer',
         'unit' => 'string',

@@ -53,7 +53,7 @@ Route::resource('markets', 'API\MarketAPIController');
 Route::resource('countries', 'API\CountryAPIController');
 Route::resource('packages', 'API\PackageAPIController');
 Route::post('merchant', 'API\MerchantAPIController@merchant');
-
+Route::resource('maincategories', 'API\MainCategoryAPIController');
 /*                   */
 Route::resource('faq_categories', 'API\FaqCategoryAPIController');
 Route::get('products/categories', 'API\ProductAPIController@categories');

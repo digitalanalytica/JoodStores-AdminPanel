@@ -9,7 +9,7 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -41,6 +41,8 @@ class Option extends Model implements HasMedia
     public $fillable = [
         'name',
         'description',
+        'name_ar',
+        'description_ar',
         'price',
         'product_id',
         'option_group_id'
@@ -55,6 +57,8 @@ class Option extends Model implements HasMedia
         'name' => 'string',
         'image' => 'string',
         'description' => 'string',
+        'name_ar' => 'string',
+        'description_ar' => 'string',
         'price' => 'double',
         'product_id' => 'integer',
         'option_group_id' => 'integer'
@@ -67,6 +71,7 @@ class Option extends Model implements HasMedia
      */
     public static $rules = [
         'name' => 'required',
+        'name_ar' => 'required',
         'price' => 'nullable|numeric|min:0',
         'product_id' => 'required|exists:products,id',
         'option_group_id' => 'required|exists:option_groups,id'

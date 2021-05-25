@@ -22,6 +22,9 @@ class Package extends Model
 
     public $fillable = [
         'name',
+        'description',
+        'name_ar',
+        'description_ar',
         'monthly_price',
         'six_month_price',
         'one_year_price',
@@ -35,6 +38,9 @@ class Package extends Model
      */
     protected $casts = [
         'name' => 'string',
+        'name_ar' => 'string',
+        'description_ar' => 'string',
+        'description' => 'string',
         'monthly_price' => 'integer',
         'six_month_price' => 'integer',
         'one_year_price' => 'integer',
@@ -48,6 +54,7 @@ class Package extends Model
      */
     public static $rules = [
         'name' => 'required|max:30',
+        'name_ar' => 'required|max:30',
         'monthly_price' => 'required|numeric',
         'six_month_price' => 'required|numeric',
         'one_year_price' => 'required|numeric',
@@ -116,5 +123,8 @@ class Package extends Model
     }
     public function markets(){
         return $this->belongsToMany(Market::class,'market_id');
+    }
+    public function merchants(){
+        return $this->belongsToMany(Package::class, 'merchant_id');
     }
 }

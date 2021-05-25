@@ -9,6 +9,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateOptionsTable extends Migration
 {
@@ -24,6 +25,8 @@ class CreateOptionsTable extends Migration
             $table->increments('id');
             $table->string('name', 127);
             $table->text('description')->nullable();
+            $table->string('name_ar', 127);
+            $table->text('description_ar')->nullable();
             $table->double('price', 8, 2)->default(0);
             $table->integer('product_id')->unsigned();
             $table->integer('option_group_id')->unsigned();
